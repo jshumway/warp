@@ -1,6 +1,20 @@
+## Java Stuff ##
 *.class
 
 # Package Files #
 *.jar
 *.war
 *.ear
+
+## Editor Stuff ##
+
+# Emacs #
+\#*\#
+*~
+
+# BlueJ #
+*.ctxt
+
+## Project ##
+images
+sounds
