@@ -19,56 +19,6 @@ public class ShiftActor extends Actor
         worldy = y;
     }
 
-    /* These four (ugly) function *should* return collisions that hit
-     * the actor on the specific side */
-    public ShiftActor collisionLeft(int dist) {
-        List<ShiftActor> actors = getObjectsInRange(dist, ShiftActor.class);
-        ShiftActor closest = actors.get(0);
-
-        for (ShiftActor sa : actors) {
-            if (sa.getWorldX() < worldx && sa.getWorldX() > closest.getX()) {
-                closest = sa;
-            }
-        }
-        return closest;
-    }
-
-    public ShiftActor collisionRight(int dist) {
-        List<ShiftActor> actors = getObjectsInRange(dist, ShiftActor.class);
-        ShiftActor closest = actors.get(0);
-
-        for (ShiftActor sa : actors) {
-            if (sa.getWorldX() > worldx && sa.getWorldX() < closest.getX()) {
-                closest = sa;
-            }
-        }
-        return closest;
-    }
-
-    public ShiftActor collisionTop(int dist) {
-        List<ShiftActor> actors = getObjectsInRange(dist, ShiftActor.class);
-        ShiftActor closest = actors.get(0);
-
-        for (ShiftActor sa : actors) {
-            if (sa.getWorldY() < worldy && sa.getWorldY() > closest.getY()) {
-                closest = sa;
-            }
-        }
-        return closest;
-    }
-
-    public ShiftActor collisionBottom(int dist) {
-        List<ShiftActor> actors = getObjectsInRange(dist, ShiftActor.class);
-        ShiftActor closest = actors.get(0);
-
-        for (ShiftActor sa : actors) {
-            if (sa.getWorldY() > worldy && sa.getWorldY() < closest.getY()) {
-                closest = sa;
-            }
-        }
-        return closest;
-    }
-
     // seeing as this is a sidescroller, this will probably change.
     public void move(int dx, int dy) {
         setWorldLocation(worldx + dx, worldy + dy);

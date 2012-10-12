@@ -1,64 +1,77 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Handles things like collisions, gravity, and acceleration
+ * Handles things like collisions, gravity, and acceleration, player
+ * input
  * 
  * @author Jared Shumway
  */
 public class Player extends ShiftActor
 {
-    // x and y velocities
-    private double yvel = 0, xvel = 0;
-
-    // maximum speeds
+    /** Physical State **/
+    /* tweakable */
     private int xSpeedMax = 10;
-    private int terminalVelocity = 25;
+    private int terminalVelocity = 20;
+    private int horizontalAccel = 2;
+    private int gravityAccel = 1;
 
-    // acceleration in the x direction
-    private double accel = 0;
+    /* internal */
+    private double yvel, xvel;
+    private boolean accelerating;
+    private boolean atRest;
 
-    public Player() {}
+    /** CREATOR **/
+    public Player() {
+        xvel = yvel = 0;
+        atRest = false;
+        accelerating = false;
+    }
 
-    // increase the x, y velocity
+    /** MANIPULATORS **/
+    /* physics helpers */
     public void impulse(int x, int y) {
         xvel += x; yvel += y;
     }
-
     public void jump() {
         impulse(0, 10);
     }
 
-    /**
-     * Checks collisions for this object, applies acceleration to
-     * velocity, then applies velocity to the world coords of the
-     * object.
-     */
-    public void physicsUpdate() {
-        // apply acceleration
-        xvel += accel;
-        yvel += 1;
-
-        if (xvel > xSpeedMax) xvel = xSpeedMax;
-        else if (xvel < -xSpeedMax) xvel = -xSpeedMax;
-
-        if (yvel > terminalVelocity) yvel = terminalVelocity;
-
-        // collisions
-        /* if the player is hitting a block under it's feet, move it
-         * so that the bottom of the image touches the top of the
-         * block, yvel is 0.
-         *
-         * if the player is hitting a wall on the left, same
-         * thing. wall on the right, same thing. ceiling, same
-         * thing. What about platforms?
-         */
-
-        // apply velocity
-        move((int) xvel, (int) yvel);
+    // check if the player is standing on a block
+    public boolean onBlock() {
+        Block block = (Block) getOneIntersectingObject(Block.class);
+        return block != null;
     }
 
-    /**
-     */
+    /* physical update */
+    private void accelerate() {
+        // apply acceleration to velocity
+        if (accelerating)
+            xvel += horizontalAccel;
+
+        yvel += gravityAccel;
+
+        // ensure max speeds are not surpassed
+        if (xvel > xSpeedMax)
+            xvel = xSpeedMax;
+        else if (xvel < -xSpeedMax) 
+            xvel = -xSpeedMax;
+
+        if (yvel > terminalVelocity)
+            yvel = terminalVelocity;
+    }
+
+    public void physicsUpdate() {
+        accelerate();
+
+        // apply velocity
+        move((int) 1, (int) yvel);
+
+        if (onBlock()) {
+            move(0, (int) -yvel);
+            yvel = 0;
+        }
+    }
+
     public void act() 
     {
         physicsUpdate();
