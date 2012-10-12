@@ -14,11 +14,13 @@ public class Player extends ShiftActor
     private int terminalVelocity = 20;
     private int horizontalAccel = 2;
     private int gravityAccel = 1;
+    private double friction = 0.10;
 
     /* internal */
     private double yvel, xvel;
     private boolean accelerating;
     private boolean atRest;
+    private boolean canJump;
 
     /** CREATOR **/
     public Player() {
@@ -33,7 +35,7 @@ public class Player extends ShiftActor
         xvel += x; yvel += y;
     }
     public void jump() {
-        impulse(0, 10);
+        impulse(0, -25);
     }
 
     // check if the player is standing on a block
@@ -47,6 +49,7 @@ public class Player extends ShiftActor
         // apply acceleration to velocity
         if (accelerating)
             xvel += horizontalAccel;
+        xvel -= xvel * friction;
 
         yvel += gravityAccel;
 
@@ -64,19 +67,25 @@ public class Player extends ShiftActor
         accelerate();
 
         // apply velocity
-        move((int) 1, (int) yvel);
+        move((int) xvel, (int) yvel);
 
-        if (onBlock()) {
+        if (yvel > 0 && onBlock()) {
             move(0, (int) -yvel);
             yvel = 0;
+            canJump = true;
         }
     }
 
     public void act() 
     {
         physicsUpdate();
-        if (Greenfoot.isKeyDown("space")) {
-            jump();
+        if (Greenfoot.isKeyDown("space")){
+            if (canJump){
+                jump();
+                canJump = false;
+            }
         }
+
+        accelerating = false;
     }    
 }
