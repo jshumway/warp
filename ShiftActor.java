@@ -15,13 +15,27 @@ public class ShiftActor extends Actor
 
     /* MANIPULATORS */
     public void setWorldLocation(int x, int y) {
-        worldx = x;
-        worldy = y;
+        ShiftWorld sw = (ShiftWorld) getWorld();
+
+        if (x < sw.worldWidth && x > 0) {
+            worldx = x;
+        }
+
+        if (y < sw.worldHeight && y > 0) {
+            worldy = y;
+        }
     }
 
     // seeing as this is a sidescroller, this will probably change.
     public void move(int dx, int dy) {
         setWorldLocation(worldx + dx, worldy + dy);
+    }
+
+    public void saveWorldLocation() {
+        ShiftWorld sw = (ShiftWorld) getWorld();
+
+        worldx = sw.getTopLeftX() + getX();
+        worldy = getY();
     }
 
     public void act() {}

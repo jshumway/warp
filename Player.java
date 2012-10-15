@@ -6,15 +6,16 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * 
  * @author Jared Shumway
  */
-public class Player extends ShiftActor
+public class Player extends Person
 {
     /** Physical State **/
     /* tweakable */
     private int xSpeedMax = 10;
-    private int terminalVelocity = 20;
-    private int horizontalAccel = 2;
+    private int terminalVelocity = 10;
+    private int horizontalAccel = 3;
     private int gravityAccel = 1;
-    private double friction = 0.10;
+    private double friction = 0.35;
+    private int jumpImpulse = 20;
 
     /* internal */
     private double yvel, xvel;
@@ -35,32 +36,66 @@ public class Player extends ShiftActor
         xvel += x; yvel += y;
     }
     public void jump() {
-        impulse(0, -25);
+        impulse(0, -jumpImpulse);
     }
 
     // check if the player is standing on a block
-    public boolean onBlock() {
+    public int onBlock() {
         Block block = (Block) getOneIntersectingObject(Block.class);
-        return block != null;
+        if (block != null)
+            return block.getWorldY() - block.getImage().getHeight()/2;
+
+        return -1;
+    }
+
+    // check if the palyer is standing on a wooden platform
+    public int onPlatform() {
+        if (yvel >= 0) {
+            Platform p = (Platform) getOneIntersectingObject(Platform.class);
+            if (p != null) {
+                return p.getWorldY() - p.getImage().getHeight()/2;
+            }
+        }
+
+        return -1;
+    }
+
+    public int collision() {
+        int block = onBlock();
+        int plat = onPlatform();
+
+        if (block > -1) return block;
+        if (plat  > -1) return plat;
+
+        return 0;
     }
 
     /* physical update */
     private void accelerate() {
+        if (yvel == 0 && xvel == 0) {
+            atRest = true;
+        } else {
+            atRest = false;
+        }
+
         // apply acceleration to velocity
-        if (accelerating)
-            xvel += horizontalAccel;
+        if (accelerating) {
+            xvel += horizontalAccel * getFacing();
+        }
         xvel -= xvel * friction;
 
         yvel += gravityAccel;
 
         // ensure max speeds are not surpassed
-        if (xvel > xSpeedMax)
+        if (xvel > xSpeedMax) {
             xvel = xSpeedMax;
-        else if (xvel < -xSpeedMax) 
+        } else if (xvel < -xSpeedMax) {
             xvel = -xSpeedMax;
+        }
 
-        if (yvel > terminalVelocity)
+        if (yvel > terminalVelocity) {
             yvel = terminalVelocity;
+        }
     }
 
     public void physicsUpdate() {
@@ -69,16 +104,18 @@ public class Player extends ShiftActor
         // apply velocity
         move((int) xvel, (int) yvel);
 
-        if (yvel > 0 && onBlock()) {
-            move(0, (int) -yvel);
+        int move = collision();
+
+        if (yvel > 0 && move > 0) {
+            move(0, -(getWorldY() + getImage().getHeight()/2 - move));
             yvel = 0;
             canJump = true;
         }
     }
 
-    public void act() 
-    {
-        physicsUpdate();
+    /* input */
+    public void inputResponse() {
+        // jumping
         if (Greenfoot.isKeyDown("space")){
             if (canJump){
                 jump();
@@ -86,6 +123,29 @@ public class Player extends ShiftActor
             }
         }
 
-        accelerating = false;
+        // horizontal movement
+        boolean left = Greenfoot.isKeyDown("left");
+        boolean right = Greenfoot.isKeyDown("right");
+        
+        if (left) {
+            setFacing(-1);
+            accelerating = true;
+        }
+
+        if (right) {
+            setFacing(1);
+            accelerating = true;
+        }
+
+        if (!left && !right) {
+            accelerating = false;
+        }
+    }
+
+    public void act() 
+    {
+        physicsUpdate();
+
+        inputResponse();
     }    
 }

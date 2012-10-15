@@ -30,14 +30,14 @@ public class ShiftWorld extends World
     {    
         // create the screen
         super(screenWidth, screenHeight, 1, false);
-        
-        fillBottom();
-        
+
         Player player = new Player();
-        addObject(player, 400, 400);
         player.setWorldLocation(400, 400);
         this.player = player;
         viewTarget = player;
+        addObject(player, 400, 400);
+
+        fillBottom();
     }
 
     /* MANIPULATORS */
@@ -70,10 +70,14 @@ public class ShiftWorld extends World
 
     /* fills the bottom of the screen with blocks */
     public void fillBottom() {
-        for (int i = 0; i <= worldWidth - 48; i+=48) {
+        for (int i = 0; i <= worldWidth; i+=48) {
             Block b = new Block();
             b.setWorldLocation(i, worldHeight - 24);
             addObject(b, i, worldHeight - 24);
         }
+    }
+
+    public int getTopLeftX() {
+        return viewTarget.getWorldX() - screenWidth / 2;
     }
 }
