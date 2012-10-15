@@ -77,7 +77,18 @@ public class ShiftWorld extends World
         }
     }
 
+    // get the top left corner of the camera
+    // used for saveWorldLocation
     public int getTopLeftX() {
-        return viewTarget.getWorldX() - screenWidth / 2;
+        x = viewTarget.getWorldX() - screenWidth / 2;
+
+        if (x < 0) {
+            return screenWidth / 2;
+        }
+        else if (x + screenWidth / 2 > worldWidth) {
+            return worldWidth - screenWidth / 2;
+        }
+
+        return x;
     }
 }
