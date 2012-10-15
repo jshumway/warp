@@ -34,7 +34,7 @@ public class ShiftActor extends Actor
     public void saveWorldLocation() {
         ShiftWorld sw = (ShiftWorld) getWorld();
 
-        worldx = sw.getTopLeftX() + getX();
+        worldx = sw.getScreenLeft() + getX();
         worldy = getY();
     }
 
@@ -43,4 +43,9 @@ public class ShiftActor extends Actor
     /* ACCESSORS */
     public int getWorldX() { return worldx; }
     public int getWorldY() { return worldy; }
+
+    public int getLeft() { return worldx - getImage().getWidth() / 2; }
+    public int getRight() { return worldx + getImage().getWidth() / 2; }
+    public int getTop() { return worldy - getImage().getHeight() / 2; }
+    public int getBottom() { return worldy + getImage().getHeight() / 2; }
 }

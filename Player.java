@@ -43,7 +43,7 @@ public class Player extends Person
     public int onBlock() {
         Block block = (Block) getOneIntersectingObject(Block.class);
         if (block != null)
-            return block.getWorldY() - block.getImage().getHeight()/2;
+            return block.getTop();
 
         return -1;
     }
@@ -51,9 +51,13 @@ public class Player extends Person
     // check if the palyer is standing on a wooden platform
     public int onPlatform() {
         if (yvel >= 0) {
-            Platform p = (Platform) getOneIntersectingObject(Platform.class);
-            if (p != null) {
-                return p.getWorldY() - p.getImage().getHeight()/2;
+            Platform platform;
+            platform = (Platform) getOneIntersectingObject(Platform.class);
+            if (platform != null && yvel >= 0) {
+                // if (getBottom() - platform.getTop() <= yvel) {
+                if (getBottom() - platform.getTop() <= yvel * 2) {
+                    return platform.getTop();
+                }
             }
         }
 
