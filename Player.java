@@ -16,18 +16,22 @@ public class Player extends Person
     private int gravityAccel = 1;
     private double friction = 0.35;
     private int jumpImpulse = 20;
+    private int fireOffset = 120;
+    private int laserCooldown = 200;
 
     /* internal */
     private double yvel, xvel;
     private boolean accelerating;
     private boolean atRest;
     private boolean canJump;
+    private int laserTick;
 
     /** CREATOR **/
     public Player() {
         xvel = yvel = 0;
         atRest = false;
         accelerating = false;
+
     }
 
     /** MANIPULATORS **/
@@ -35,6 +39,7 @@ public class Player extends Person
     public void impulse(int x, int y) {
         xvel += x; yvel += y;
     }
+
     public void jump() {
         impulse(0, -jumpImpulse);
     }
@@ -126,7 +131,7 @@ public class Player extends Person
         // horizontal movement
         boolean left = Greenfoot.isKeyDown("left");
         boolean right = Greenfoot.isKeyDown("right");
-        
+
         if (left) {
             setFacing(-1);
             accelerating = true;
@@ -140,12 +145,35 @@ public class Player extends Person
         if (!left && !right) {
             accelerating = false;
         }
+
+        //shooting
+        if ("t".equals(Greenfoot.getKey()))
+        {
+            fire();
+        }
     }
 
-    public void act() 
-    {
+    private void fire(){
+    
+        if (laserTick == 0){
+            Laser laser = new Laser();
+            getWorld().addObject(laser, getX() + fireOffset , getY());
+            laser.setWorldLocation(getX() + fireOffset, getY());
+            laser.setRotation(getRotation());
+            laserTick = laserCooldown;
+        }
+
+    }
+
+    public void act(){ 
+    
+        if (laserTick > 0){
+            laserTick--;
+        }
+
         physicsUpdate();
 
         inputResponse();
     }    
 }
+
