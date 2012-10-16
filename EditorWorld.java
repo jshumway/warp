@@ -26,11 +26,5 @@ public class EditorWorld extends ShiftWorld
     private void prepare()
     {
         fillBottom();
-        Platform platform = new Platform();
-        addObject(platform, 797, 415);
-        Platform platform2 = new Platform();
-        addObject(platform2, 204, 425);
-        StationaryArcher stationaryarcher = new StationaryArcher(1);
-        addObject(stationaryarcher, 549, 485);
     }
 }

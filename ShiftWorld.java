@@ -36,8 +36,6 @@ public class ShiftWorld extends World
         this.player = player;
         viewTarget = player;
         addObject(player, 400, 400);
-        
-        prepare();
     }
 
     // used by editor world
@@ -111,15 +109,4 @@ public class ShiftWorld extends World
     }
 
     // getRelativeY always returns y
-    
-    private void prepare()
-    {
-        fillBottom();
-        Platform platform = new Platform();
-        addObject(platform, 797, 415);
-        Platform platform2 = new Platform();
-        addObject(platform2, 204, 425);
-        StationaryArcher stationaryarcher = new StationaryArcher(1);
-        addObject(stationaryarcher, 549, 485);
-    }
 }
