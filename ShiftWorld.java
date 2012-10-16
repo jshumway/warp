@@ -11,7 +11,7 @@ import java.util.List;
 public class ShiftWorld extends World
 {
     /* world geometry */
-    public static final int worldWidth = 1600;
+    public static final int worldWidth = 3200;
     public static final int worldHeight = 600;
     
     /* screen geometry */
@@ -36,8 +36,13 @@ public class ShiftWorld extends World
         this.player = player;
         viewTarget = player;
         addObject(player, 400, 400);
+        
+        prepare();
+    }
 
-        fillBottom();
+    // used by editor world
+    public ShiftWorld(int width, int height) {
+        super(width, height, 1);
     }
 
     /* MANIPULATORS */
@@ -90,5 +95,31 @@ public class ShiftWorld extends World
         }
 
         return x;
+    }
+
+    // pass the absolute world location
+    public void addObject(ShiftActor object, int x, int y) {
+        addObject((Actor) object, x, y);
+        object.setWorldLocation(x, y);
+    }
+
+    public int getRelativeX(int x) {
+        if (viewTarget != null) {
+            return x - (viewTarget.getWorldX() - screenWidth / 2);
+        }
+        return x;
+    }
+
+    // getRelativeY always returns y
+    
+    private void prepare()
+    {
+        fillBottom();
+        Platform platform = new Platform();
+        addObject(platform, 797, 415);
+        Platform platform2 = new Platform();
+        addObject(platform2, 204, 425);
+        StationaryArcher stationaryarcher = new StationaryArcher(1);
+        addObject(stationaryarcher, 549, 485);
     }
 }

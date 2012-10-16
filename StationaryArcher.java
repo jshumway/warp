@@ -8,24 +8,34 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class StationaryArcher extends StationaryEnemy
 {
-    /**
-     * Act - do whatever the stationaryArcher wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
+    /* tweakable */
+    private int fireCooldown = 60;
+
+    /* internal */
+    private int fireTick;
+
     public StationaryArcher(int dir){
         super (dir,300);
+        fireTick = 0;
     }
     public void act(){
-       if(look()){
-           spoted();
-        }
-    }
-    protected void spoted(){
+        if (fireTick > 0)
+            fireTick--;
         
-        fireArrow();
+        if(look())
+            spoted();
+    }
+    protected void spoted() {
+        if (fireTick == 0) {
+            fireArrow();
+            fireTick = fireCooldown;
+        }
     }
     private void fireArrow(){
         Arrow arrow=new Arrow(getFacing());
-        getWorld().addObject(arrow,getX(),getY());
+        ShiftWorld sw = (ShiftWorld) getWorld();
+
+        sw.addObject(arrow, getX(), getY());
+        arrow.setLocation(sw.getRelativeX(getX()), getY());
     }   
 }
