@@ -6,6 +6,10 @@ A 2D sidescroller based around stealth, assassinations, acrobatic puzzles, and t
 To Create a World
 -----------------
 
-The player is inserted into the world inside the world's constructor. Eventually we will have levels and where the player is put will be changable by level. Until then, just change it in ShiftWorld's constructor.
+To create a world, first subclass `ShiftWorld`. Put this subclass to the side for now.
 
-Because ShiftWorld implements a sidescrolling world, and greenfoot makes it *difficult* to change the way actors are added to the world (no, overridding addObject does not work). So, when you add, say, a platform to the world, you need to right click it, choose 'Inherited from ShiftActor' -> 'SaveWorldLocation'. Then they will remain in the same spot. I am working on this.
+Open the greenfoot project and create a new `EditorWorld`. Generally, you want to right click and hit `fillBottom()` to crate a floor for the world. Go ahead and place platforms, enemies, and the like into the level.
+
+When the level is done, right click and choose *Save the World*. This will create `prepare()` within `EditorWorld`. Copy `prepare()` to your custom class that you subclassed from `ShiftWorld`. Then add a call to `prepare()` into the constructor. If you select your custom level class and choose `new whateverLevel()`, you should see all of your objects arcoss the screen after you hit **start**. You can now test your level. To make changes, you need to go back to `EditorWorld` and make the changes there then recopy `prepare()`.
+
+**IMPORTANT**: Do not commit EditorWorld.java to git. Nobody wants your EditorWorld that has all of your level's objects in it. We only want the clean version on github.com and the final version in your level class. If git is complaining about EditorWorld.java having been changed, ignore it. Do not commit it back to git.
