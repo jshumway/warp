@@ -33,7 +33,6 @@ public class ShiftActor extends Actor
 
     public void saveWorldLocation() {
         ShiftWorld sw = (ShiftWorld) getWorld();
-
         worldx = sw.getScreenLeft() + getX();
         worldy = getY();
     }

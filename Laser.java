@@ -15,7 +15,7 @@ public class Laser extends ShiftActor
     public void act() 
     {
         move(30,0);
-
+    
     } 
 
 

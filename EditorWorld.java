@@ -27,18 +27,13 @@ public class EditorWorld extends ShiftWorld
     {
         fillBottom();
         MakeWayPoint makewaypoint = new MakeWayPoint();
-        addObject(makewaypoint, 732, 483);
-        Enemy enemy = new Enemy(1);
-        addObject(enemy, 579, 484);
-        removeObject(enemy);
-        Enemy enemy2 = new Enemy(1);
-        addObject(enemy2, 822, 490);
-        makewaypoint.setLocation(502, 460);
-        makewaypoint.setLocation(1049, 476);
-        removeObject(enemy2);
+        addObject(makewaypoint, 800, 483);
         PatrolingEnemy patrolingenemy = new PatrolingEnemy(1);
-        addObject(patrolingenemy, 740, 492);
-        patrolingenemy.setLocation(743, 484);
-        patrolingenemy.setLocation(358, 483);
+        addObject(patrolingenemy, 680, 492);
+        Player player = new Player();
+        addObject(player, 91, 483);
+        patrolingenemy.setLocation(439, 485);
+        MakeWayPoint makewaypoint2 = new MakeWayPoint();
+        addObject(makewaypoint2, 217, 511);
     }
 }
