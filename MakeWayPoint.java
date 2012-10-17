@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class MakeWayPoint extends WayPoint
+public class MakeWayPoint extends ShiftActor
 {
     /**
      * Act - do whatever the MakeWayPoint wants to do. This method is called whenever
@@ -17,7 +17,12 @@ public class MakeWayPoint extends WayPoint
        
     public void act() 
     {
-        if (moveTick > 0)
+        WayPoint waypoint=new WayPoint();
+        waypoint.setWorldLocation(getWorldX(),getWorldY());
+        getWorld().addObject(waypoint,getWorldX(),getWorldY());
+        getWorld().removeObject(this);
+        
+        /*if (moveTick > 0)
         {
             moveTick--;
         }        
@@ -30,7 +35,7 @@ public class MakeWayPoint extends WayPoint
                 p.setFacing(-1*p.getFacing());
             }
             moveTick = 30;
-        }
+        }*/
         
         
         // Add your action code here.

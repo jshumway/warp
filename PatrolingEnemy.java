@@ -24,12 +24,14 @@ public class PatrolingEnemy extends Enemy
         super.act();
         // Add your action code here.
     }
+    private int count=6;
     protected void moveToPoint(){
-        setLocation(getX()+(2*getFacing()),getY());
+        move((2*getFacing()),0);
         Actor wayPoint=getOneIntersectingObject(WayPoint.class);
-        if(wayPoint!=null){
+        if(wayPoint!=null&&count>5){
             setFacing(getFacing()*-1);
-        
+            count=0;
         }
+        count++;
     }    
 }
