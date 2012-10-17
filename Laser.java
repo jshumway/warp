@@ -21,6 +21,13 @@ public class Laser extends ShiftActor
     {
         move(speed * direction,0);
         collision();
+        
+        // bounds checking
+        if (getWorldX() >= ShiftWorld.worldWidth) {
+            getWorld().removeObject(this);
+        } else if (getWorldX() <= 0) {
+            getWorld().removeObject(this);
+        }
     } 
     private void collision() {
         Actor hit=getOneIntersectingObject(Block.class);
