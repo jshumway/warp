@@ -1,5 +1,5 @@
 #Greenfoot properties
-#Wed Oct 17 01:38:01 MST 2012
+#Wed Oct 17 15:38:27 PDT 2012
 target12.editor.height=700
 target10.editor.width=900
 target2.width=80
@@ -51,8 +51,8 @@ target14.type=ClassTarget
 class.Platform.image=wooden-platform.png
 class.PatrolingEnemy.superclass=Enemy
 dependency18.from=EditorWorld
-class.PatrolingEnemy.image=player-standing_left.png
 target11.height=50
+class.PatrolingEnemy.image=player-standing_left.png
 target1.editor.height=700
 dependency4.from=ShiftWorld
 dependency5.to=Block

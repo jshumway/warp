@@ -97,6 +97,24 @@ public class ShiftWorld extends World
             p.setWorldLocation(x + w * i, y);
         }
     }
+    
+    /* create a row of blocks that is count long (including the
+     * head) starting from the platform head
+     *
+     * Only works in EditorWorld!
+     */
+    public void blockRow (Block head, int length) {
+        int x = head.getX();
+        int y = head.getY();
+
+        for (int i = 1; i < length; i++) {
+            Block p = new Block();
+            int w = p.getImage().getWidth();
+
+            addObject(p, x + w * i, y);
+            p.setWorldLocation(x + w * i, y);
+        }
+    }
 
     // pass the absolute world location
     public void addObject(ShiftActor object, int x, int y) {
