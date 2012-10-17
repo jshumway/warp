@@ -172,11 +172,13 @@ public class Player extends Person
     }
 
     private void fire(){
-    
         if (laserTick == 0){
             Laser laser = new Laser(getFacing());
+            //ShiftWorld sw = (ShiftWorld) getWorld();
+
             getWorld().addObject(laser, getX() + fireOffset , getY());
-            laser.setWorldLocation(getX() + fireOffset, getY());
+
+            laser.setWorldLocation(getWorldX() + fireOffset, getY());
             laser.setRotation(getRotation());
             laserTick = laserCooldown;
         }
