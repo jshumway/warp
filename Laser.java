@@ -22,15 +22,14 @@ public class Laser extends ShiftActor
         if(hit!=null){
             getWorld().removeObject(this);
         }
-        hit=getOneIntersectingObject(StationaryArcher.class);
-         if(hit!=null){
-            getWorld().removeObject(hit);
+        Enemy enemy=(Enemy)getOneIntersectingObject(Enemy.class);
+         if(enemy!=null&&enemy.beShot()){
+            getWorld().removeObject(enemy);
             getWorld().removeObject(this);
+         }else if(enemy!=null){
+            getWorld().removeObject(this);   
          }
-        hit=getOneIntersectingObject(Enemy.class);
-        if(hit!=null){
-            getWorld().removeObject(this);
-        }
+        
 
     }
 
