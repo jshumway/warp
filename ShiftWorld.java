@@ -80,6 +80,24 @@ public class ShiftWorld extends World
         }
     }
 
+    // pass the absolute world location
+    public void addObject(ShiftActor object, int x, int y) {
+        addObject((Actor) object, x, y);
+        object.setWorldLocation(x, y);
+    }
+
+    /* IMPORTANT: Use this method when killing the player in a
+     * standard way
+     */
+    public void killPlayer() {
+        if (player != null) {
+            // do shit to kill the player
+            player.setWorldLocation(300, 300);
+            // removeObject(player);
+        }
+    }
+
+    /* ACCESSORS */
     // get the top left corner of the camera
     // used for saveWorldLocation
     public int getScreenLeft() {
@@ -95,12 +113,6 @@ public class ShiftWorld extends World
         return x;
     }
 
-    // pass the absolute world location
-    public void addObject(ShiftActor object, int x, int y) {
-        addObject((Actor) object, x, y);
-        object.setWorldLocation(x, y);
-    }
-
     // using the (screen)x coord of an object, return the absolute
     // world x that corrisponds
     public int getWorldX(int x) {
@@ -111,4 +123,6 @@ public class ShiftWorld extends World
     }
 
     // getRelativeY always returns y
+
+    public Player getPlayer() { return player; }
 }

@@ -1,11 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-/**
- * Write a description of class Enemy here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 public class Enemy extends Person
 {
     protected int sightRange=50;
@@ -19,21 +13,29 @@ public class Enemy extends Person
         setFacing(dir);
     }
   
-    public boolean look(){
-        int distToWall=sightRange;
+    // generalized to work without reliance on this objects state
+    // at least in regards to range and facing
+    public boolean rayTrace(int range, int facing) {
+        int distToWall = range;
 
-        for (int i=0;i<sightRange;i++) {
-            Actor wall = getOneObjectAtOffset(i*getFacing(),0,Block.class);
-            Actor player = getOneObjectAtOffset(i*getFacing(),0,Player.class);
-            if(wall!=null) {
+        for (int i = 0; i < range; i++) {
+            Actor wall = getOneObjectAtOffset(i*facing,0,Block.class);
+            Actor player = getOneObjectAtOffset(i*facing,0,Player.class);
+
+            if(wall != null) {
                 return false;
             }             
 
-            if(player!=null) {
+            if(player != null) {
                 return true;
             }
         }
 
         return false;
-    } 
+    }
+
+    // don't break public interfaces!
+    public boolean look() {
+        return rayTrace(sightRange, getFacing());
+    }
 }

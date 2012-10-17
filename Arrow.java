@@ -24,18 +24,20 @@ public class Arrow extends ShiftActor
     }    
 
     private void collision(){
-        Actor hit= getOneIntersectingObject(Block.class);
+        Actor hit = getOneIntersectingObject(Block.class);
 
         if (hit != null) {
             getWorld().removeObject(this); return;
         }
 
-        hit=getOneIntersectingObject(Player.class);
+        hit = getOneIntersectingObject(Player.class);
 
         // this && false is so that arrows don't kill the player. For
         // testing purposes only
         if (hit != null && false) {
-            getWorld().removeObject(hit);
+            ShiftWorld sw = (ShiftWorld) getWorld();
+
+            sw.killPlayer();
             getWorld().removeObject(this);
         }
     }
