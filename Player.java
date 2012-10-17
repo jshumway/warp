@@ -18,7 +18,7 @@ public class Player extends Person
     private int jumpImpulse = 20;
     private int fireOffset = 120;
     private int laserCooldown = 200;
-    private int stabRange = 100;
+    private int stabRange = 90;
 
     /* internal */
     private double yvel, xvel;
@@ -162,11 +162,12 @@ public class Player extends Person
     }
     private void stab(){
         for (int i = 0; i < stabRange; i++) {
+            Enemy enemy = (Enemy) getOneObjectAtOffset(i*getFacing(),0,Enemy.class);            
             
-            Actor enemy = getOneObjectAtOffset((i+fireOffset)*getFacing(),0,Enemy.class);            
-            
-            if(enemy != null) {
-                getWorld().removeObject(enemy);
+            if(enemy != null && enemy.beStabbed()) {
+                if (getFacing() == enemy.getFacing()) {
+                    getWorld().removeObject(enemy);
+                }
             }
         }
     }

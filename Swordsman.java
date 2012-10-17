@@ -7,6 +7,7 @@ public class Swordsman extends PatrolingEnemy
 
     public Swordsman(int dir) {
         super(dir);
+        setCanBeStabbed(true);
     }
     
     public void act() {

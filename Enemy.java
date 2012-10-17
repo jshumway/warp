@@ -13,10 +13,17 @@ public class Enemy extends Person
     public void setShot(Boolean s){
         canShot=s;
     }
-    public Boolean beShot(){
+    public boolean beShot(){
         return canShot;
     }
 
+    public void setCanBeStabbed(boolean b) {
+        canStabed = b;
+    }
+    public boolean beStabbed() {
+        return canStabed;
+    }
+    
     public Enemy(int dir){
         setFacing(dir);
     }
