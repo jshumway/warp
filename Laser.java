@@ -15,8 +15,24 @@ public class Laser extends ShiftActor
     public void act() 
     {
         move(30,0);
-    
+        collision();
     } 
+    private void collision(){
+        Actor hit=getOneIntersectingObject(Block.class);
+        if(hit!=null){
+            getWorld().removeObject(this);
+        }
+        hit=getOneIntersectingObject(StationaryArcher.class);
+         if(hit!=null){
+            getWorld().removeObject(hit);
+            getWorld().removeObject(this);
+         }
+        hit=getOneIntersectingObject(Enemy.class);
+        if(hit!=null){
+            getWorld().removeObject(this);
+        }
+
+    }
 
 
 
