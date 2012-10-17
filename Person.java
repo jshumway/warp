@@ -11,9 +11,13 @@ public class Person extends ShiftActor
     private int facing;  /* <- (-1) | (0) | (1) -> */
 
     /* MANIPULATORS */
-    public void setFacing(int f) {
-        if (f >= -1 && f <= 1)
-            facing = f;
+    public void setFacing(int dir) {
+        if (dir < -1)
+            facing = -1;
+        else if (dir > 1) 
+            facing = 1;
+        else
+            facing = dir;
     }
 
     /* ACCESSORS */

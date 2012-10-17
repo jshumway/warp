@@ -15,7 +15,7 @@ public class StationaryArcher extends StationaryEnemy
     private int fireTick;
 
     public StationaryArcher(int dir){
-        super (dir,300);
+        super(dir, 300);
         fireTick = 0;
     }
     public void act(){
@@ -31,11 +31,12 @@ public class StationaryArcher extends StationaryEnemy
             fireTick = fireCooldown;
         }
     }
+
     private void fireArrow(){
-        Arrow arrow=new Arrow(getFacing());
+        Arrow arrow = new Arrow(getFacing());
         ShiftWorld sw = (ShiftWorld) getWorld();
 
         sw.addObject(arrow, getX(), getY());
-        arrow.setLocation(sw.getRelativeX(getX()), getY());
+        arrow.setWorldLocation(sw.getWorldX(getX()), getY());
     }   
 }

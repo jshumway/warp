@@ -101,9 +101,11 @@ public class ShiftWorld extends World
         object.setWorldLocation(x, y);
     }
 
-    public int getRelativeX(int x) {
+    // using the (screen)x coord of an object, return the absolute
+    // world x that corrisponds
+    public int getWorldX(int x) {
         if (viewTarget != null) {
-            return x - (viewTarget.getWorldX() - screenWidth / 2);
+            return x + getScreenLeft();
         }
         return x;
     }

@@ -31,12 +31,13 @@ public class ShiftActor extends Actor
         setWorldLocation(worldx + dx, worldy + dy);
     }
 
+    /*
     public void saveWorldLocation() {
         ShiftWorld sw = (ShiftWorld) getWorld();
 
         worldx = sw.getScreenLeft() + getX();
         worldy = getY();
-    }
+    }*/
 
     public void act() {}
 
