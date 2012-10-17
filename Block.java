@@ -16,4 +16,9 @@ public class Block extends ShiftActor
     {
         // Add your action code here.
     }    
+    public void blockRow(int length) {
+        ShiftWorld sw = (ShiftWorld) getWorld();
+
+        sw.blockRow(this, length);
+    }
 }
