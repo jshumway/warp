@@ -12,9 +12,13 @@ public class Laser extends ShiftActor
      * Act - do whatever the Laser wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
+    private int direction;
+    public Laser(int dir){
+        direction=dir;
+    }
     public void act() 
     {
-        move(30,0);
+        move(30*direction,0);
         collision();
     } 
     private void collision(){

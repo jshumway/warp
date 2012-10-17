@@ -18,6 +18,7 @@ public class Player extends Person
     private int jumpImpulse = 20;
     private int fireOffset = 120;
     private int laserCooldown = 200;
+    private int stabRange = 100;
 
     /* internal */
     private double yvel, xvel;
@@ -155,12 +156,25 @@ public class Player extends Person
         {
             fire();
         }
+        if((Greenfoot.isKeyDown("f"))){
+            stab();
+        }
+    }
+    private void stab(){
+        for (int i = 0; i < stabRange; i++) {
+            
+            Actor enemy = getOneObjectAtOffset((i+fireOffset)*getFacing(),0,Enemy.class);            
+            
+            if(enemy != null) {
+                getWorld().removeObject(enemy);
+            }
+        }
     }
 
     private void fire(){
     
         if (laserTick == 0){
-            Laser laser = new Laser();
+            Laser laser = new Laser(getFacing());
             getWorld().addObject(laser, getX() + fireOffset , getY());
             laser.setWorldLocation(getX() + fireOffset, getY());
             laser.setRotation(getRotation());
