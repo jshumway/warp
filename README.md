@@ -1,4 +1,4 @@
-warp
+Warp
 ====
 
 A 2D sidescroller based around stealth, assassinations, acrobatic puzzles, and time travel.
@@ -6,10 +6,12 @@ A 2D sidescroller based around stealth, assassinations, acrobatic puzzles, and t
 To Create a World
 -----------------
 
-To create a world, first subclass `ShiftWorld`. Put this subclass to the side for now.
+First, subclass `ShiftWorld` with your own class, named something like *LevelJared* or *JaredLevel1*. Put this to the side right now.
 
-Open the greenfoot project and create a new `EditorWorld`. Generally, you want to right click and hit `fillBottom()` to crate a floor for the world. Go ahead and place platforms, enemies, and the like into the level.
+Right click `EditorWorld` and hit `new EditorWorld()`. Put a bunch of stuff into this world. **NOTE:** *Where ever you place an object initially is its final location. Moving it around will not move it's actual location, because greenfoot hates us.
 
-When the level is done, right click and choose *Save the World*. This will create `prepare()` within `EditorWorld`. Copy `prepare()` to your custom class that you subclassed from `ShiftWorld`. Then add a call to `prepare()` into the constructor. If you select your custom level class and choose `new whateverLevel()`, you should see all of your objects arcoss the screen after you hit **start**. You can now test your level. To make changes, you need to go back to `EditorWorld` and make the changes there then recopy `prepare()`.
+Anyway, when you have placed all of your ojbects (don't place the Player), right click and choose *Save the World*. This will save all of the objects in the current world into `EditorWorld`, specically into the `prepare` method. Copy this method to the subclass of `ShiftWorld` you created earlier. Presto, you have a level.
 
-**IMPORTANT**: Do not commit EditorWorld.java to git. Nobody wants your EditorWorld that has all of your level's objects in it. We only want the clean version on github.com and the final version in your level class. If git is complaining about EditorWorld.java having been changed, ignore it. Do not commit it back to git.
+If you want to edit the placement of any objects, you need to readd the object in question to `EditorWorld`, do *Save the World* again, and re copy everything. Yes, this blows. We don't have a good way around it yet, but we are thinking of solutions. Plan on it being ready for the 60% prototype.
+
+**IMPORTANT**: Do not commit changes to *EditorWorld.java*. When git complains about unstaged changes, just right click the file and choose git stash. This will stash the change away so that git ignores what you did to it for the purposes of commiting, pushing, and pulling.
