@@ -25,6 +25,6 @@ public class EditorWorld extends ShiftWorld
      */
     private void prepare()
     {
-        fillBottom();
+       
     }
 }
