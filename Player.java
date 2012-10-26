@@ -46,38 +46,38 @@ public class Player extends Person
     }
 
     // check if the player is standing on a block
-    public int onBlock() {
+    public boolean onBlock() {
         Block block = (Block) getOneIntersectingObject(Block.class);
-        if (block != null)
-            return block.getTop();
+        if (block != null) {
+            setLocation(getX(), getY() - (getBottom() - block.getTop()));
+            return true;
+        }
 
-        return -1;
+        return false;
     }
 
     // check if the palyer is standing on a wooden platform
-    public int onPlatform() {
+    public boolean onPlatform() {
         if (yvel >= 0) {
             Platform platform;
             platform = (Platform) getOneIntersectingObject(Platform.class);
             if (platform != null && yvel >= 0) {
                 // if (getBottom() - platform.getTop() <= yvel) {
                 if (getBottom() - platform.getTop() <= yvel * 2) {
-                    return platform.getTop();
+                    setLocation(getX(), getY() - (getBottom() - platform.getTop()));
+                    return true;
                 }
             }
         }
 
-        return -1;
+        return false;
     }
 
-    public int collision() {
-        int block = onBlock();
-        int plat = onPlatform();
-
-        if (block > -1) return block;
-        if (plat  > -1) return plat;
-
-        return 0;
+    public void collision() {
+        // test vertical collision
+        if (onBlock() || onPlatform()) {
+            yvel = 0; canJump = true;
+        }
     }
 
     /* physical update */
@@ -114,13 +114,7 @@ public class Player extends Person
         // apply velocity
         move((int) xvel, (int) yvel);
 
-        int move = collision();
-
-        if (yvel > 0 && move > 0) {
-            move(0, -(getWorldY() + getImage().getHeight()/2 - move));
-            yvel = 0;
-            canJump = true;
-        }
+        collision();
     }
 
     /* input */
