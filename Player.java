@@ -132,11 +132,17 @@ public class Player extends Person
         boolean right = Greenfoot.isKeyDown("right");
 
         if (left) {
+            if(getFacing()==1){
+                flipImage();
+            }    
             setFacing(-1);
             accelerating = true;
         }
 
         if (right) {
+            if(getFacing()==-1){
+                flipImage();
+            }
             setFacing(1);
             accelerating = true;
         }
@@ -154,6 +160,12 @@ public class Player extends Person
             stab();
         }
     }
+    private void flipImage(){
+        GreenfootImage image=getImage();
+        image.mirrorHorizontally();
+        setImage(image);
+    }
+    
     private void stab(){
         for (int i = 0; i < stabRange; i++) {
             Enemy enemy = (Enemy) getOneObjectAtOffset(i*getFacing(),0,Enemy.class);            

@@ -27,8 +27,14 @@ public class PatrolingEnemy extends Enemy
         if (wayPoint != null && count > 5) {
             setFacing(getFacing()*-1);
             count=0;
+            flipImage();
         }
 
         count++;
-    }    
+    } 
+     private void flipImage(){
+        GreenfootImage image=getImage();
+        image.mirrorHorizontally();
+        setImage(image);
+    }
 }
