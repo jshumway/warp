@@ -201,6 +201,6 @@ public class Player extends Person
         physicsUpdate();
 
         inputResponse();
-    }    
+    } 
 }
 

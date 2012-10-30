@@ -8,7 +8,13 @@ public class Swordsman extends PatrolingEnemy
 
     public Swordsman(int dir) {
         super(dir);
-        setCanBeStabbed(true);
+        if(dir==1)
+            flipImage();
+    }
+     private void flipImage(){
+        GreenfootImage image=getImage();
+        image.mirrorHorizontally();
+        setImage(image);
     }
     
     public void act() {
