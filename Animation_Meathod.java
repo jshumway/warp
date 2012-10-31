@@ -30,13 +30,13 @@ public class Animation_Meathod
     }    
     private int counter=0;
     //animate goes in act it should go every tick or what ever timer we put animations on
-    public void animate(){
+    /*public void animate(){
         setImage(animation[counter]);
         //will need to make it so it cheacks what direction its looking and changes the image to match
         counter++;
         if(counter==length){
             counter=0;
         }
-    }
+    }*/
 }
 

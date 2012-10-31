@@ -209,16 +209,17 @@ public class Player extends Person
             stab();
         }
     }
+
     private void flipImage(){
         GreenfootImage image=getImage();
         image.mirrorHorizontally();
         setImage(image);
     }
-    
+
     private void stab(){
         for (int i = 0; i < stabRange; i++) {
             Enemy enemy = (Enemy) getOneObjectAtOffset(i*getFacing(),0,Enemy.class);            
-            
+
             if(enemy != null && enemy.beStabbed()) {
                 if (getFacing() == enemy.getFacing()) {
                     getWorld().removeObject(enemy);
@@ -241,8 +242,17 @@ public class Player extends Person
 
     }
 
+    private void killZone(){
+        if (getY() > 400)
+        {
+            ShiftWorld sw = (ShiftWorld) getWorld();
+            sw.killPlayer();
+        }
+    }
+
+
     public void act(){ 
-    
+
         if (laserTick > 0){
             laserTick--;
         }
@@ -250,6 +260,6 @@ public class Player extends Person
         physicsUpdate();
 
         inputResponse();
-    }    
+    } 
 }
 

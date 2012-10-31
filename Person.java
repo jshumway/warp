@@ -8,14 +8,16 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Person extends ShiftActor
 {
     /* internal */
-    private int facing = 1;  /* <- (-1) | (0) | (1) -> */
+    private int facing;  /* <- (-1) | (0) | (1) -> */
 
     /* MANIPULATORS */
     public void setFacing(int dir) {
-        if (dir <= -1)
+        if (dir < -1)
             facing = -1;
-        else if (dir >= 0) 
+        else if (dir > 1) 
             facing = 1;
+        else
+            facing = dir;
     }
 
     /* ACCESSORS */
