@@ -13,14 +13,17 @@ public class ShiftWorld extends World
     /* world geometry */
     public static final int worldWidth = 3200;
     public static final int worldHeight = 600;
-    
+
     /* screen geometry */
     public static final int screenWidth = 800;
     public static final int screenHeight = 600;    
-    
+
     /** internal **/
     // the player controlled actor
     private Player player;
+    
+    // the independent timer
+    private Timer timer;
 
     // the actor that the screen should center on
     private ShiftActor viewTarget;
@@ -30,7 +33,12 @@ public class ShiftWorld extends World
     {    
         // create the screen
         super(screenWidth, screenHeight, 1, false);
-
+        paintOrder();
+        // adds a timer
+        timer = new Timer();
+        addObject(timer, 74, 60);
+        timer.setLocation(79,19);
+        // adds the player
         Player player = new Player();
         player.setWorldLocation(400, 400);
         this.player = player;
@@ -41,6 +49,7 @@ public class ShiftWorld extends World
     // used by editor world
     public ShiftWorld(int width, int height) {
         super(width, height, 1);
+        paintOrder();
     }
 
     /* MANIPULATORS */
@@ -59,7 +68,7 @@ public class ShiftWorld extends World
             if (screenx + screenWidth > worldWidth) 
                 screenx = worldWidth - screenWidth;
         }
-        
+
         List<ShiftActor> sActors = getObjects(ShiftActor.class);
 
         for (ShiftActor sactor : sActors) {
@@ -69,6 +78,15 @@ public class ShiftWorld extends World
 
             sactor.setLocation(awx - screenx, awy);
         }
+
+    }
+
+    public void paintOrder() {
+        // sets the order in which things appear on the world
+        setPaintOrder(Timer.class, MakeWayPoint.class, PlatformWaypoint.class, 
+            Laser.class, Arrow.class, MovingPlatform.class, 
+            WayPoint.class, Platform.class, Player.class,
+            Enemy.class, Block.class, Background.class);
     }
 
     /* fills the bottom of the screen with blocks */
@@ -97,7 +115,7 @@ public class ShiftWorld extends World
             p.setWorldLocation(x + w * i, y);
         }
     }
-    
+
     /* create a row of blocks that is count long (including the
      * head) starting from the platform head
      *
@@ -120,6 +138,10 @@ public class ShiftWorld extends World
     public void addObject(ShiftActor object, int x, int y) {
         addObject((Actor) object, x, y);
         object.setWorldLocation(x, y);
+    }
+    
+    public void addObject(ShiftActor object) {
+        addObject((Actor) object, object.getWorldX(), object.getWorldY()); 
     }
 
     /* IMPORTANT: Use this method when killing the player in a
@@ -161,4 +183,5 @@ public class ShiftWorld extends World
     // getRelativeY always returns y
 
     public Player getPlayer() { return player; }
+
 }
