@@ -18,6 +18,17 @@ If you want to edit the placement of any objects, you need to readd the object i
 
 ### Adding a Background
 
-Right click `Background` and choose `new Background(String image)`. Place the object anywhere into the world. Greenfoot will ask you for a filename, this should be a file in the `images` folder. If the image you want is `images\JordanBackgronud.png`, simply type `"JordanBackground.png"` (including quotes) into the constructor box when asked. The background image needs to be the exact width and height of the world, which by default is 3200x600.
+To add a background image to your level, open your level class and find the constructor. Change the constructor so that it has the following two lines, and looks similar to:
 
-Adding a background image can make it difficult to 'right click > save world'. Luckily, you can also go to the menu `controls > Save the World`. 
+```` java
+public LevelJared {
+    super();
+
+    Background bg = new Background("my_background.png");
+    addObject(bg);
+
+    // other stuff
+}
+````
+
+**Note**: "my_backrground.png" is the name of a file inside the `images/` directory inside the greenfoot project folder.
