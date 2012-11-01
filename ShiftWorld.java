@@ -95,13 +95,13 @@ public class ShiftWorld extends World
     }
 
     /* fills the bottom of the screen with blocks */
-    public void fillBottom() {
+    /* public void fillBottom() {
         for (int i = 0; i <= worldWidth; i+=48) {
             Block b = new Block();
             b.setWorldLocation(i, worldHeight - 24);
             addObject(b, i, worldHeight - 24);
         }
-    }
+    } */
 
     /* create a row of platforms that is count long (including the
      * head) starting from the platform head
@@ -109,15 +109,12 @@ public class ShiftWorld extends World
      * Only works in EditorWorld!
      */
     public void platformRow(Platform head, int length) {
-        int x = head.getX();
-        int y = head.getY();
-
         for (int i = 1; i < length; i++) {
             Platform p = new Platform();
-            int w = p.getImage().getWidth();
+            int w = p.getWidth();
 
-            addObject(p, x + w * i, y);
-            p.setWorldLocation(x + w * i, y);
+            p.setWorldLocation(head.getX() + w * i, head.getY());
+            addObject(p);
         }
     }
 
@@ -127,15 +124,22 @@ public class ShiftWorld extends World
      * Only works in EditorWorld!
      */
     public void blockRow (Block head, int length) {
-        int x = head.getX();
-        int y = head.getY();
-
         for (int i = 1; i < length; i++) {
             Block p = new Block();
-            int w = p.getImage().getWidth();
+            int w = p.getWidth();
 
-            addObject(p, x + w * i, y);
-            p.setWorldLocation(x + w * i, y);
+            p.setWorldLocation(head.getX() + w * i, head.getY());
+            addObject(p);
+        }
+    }
+
+    public void wallStack(Wall head, int height) {
+        for (int i = -1; i > -height; i--) {
+            Wall w = new Wall();
+            int h = w.getHeight();
+
+            w.setWorldLocation(head.getX(), head.getY() + i*h);
+            addObject(w);
         }
     }
 
