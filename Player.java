@@ -26,6 +26,8 @@ public class Player extends Person
     private boolean atRest;
     private boolean canJump;
     private int laserTick;
+    private boolean hittingWallLeft=false;
+    private boolean hittingWallRight=false;
 
     /** CREATOR **/
     public Player() {
@@ -64,6 +66,22 @@ public class Player extends Person
         }
         return false;
     }
+    private Boolean lookForWallRight(){
+        for(int i=-45;i<45;i++){
+           Actor wall=getOneObjectAtOffset(40,i,Wall.class);
+            if(wall!=null)
+                return true;
+            }
+            return false;
+        }
+        private boolean lookForWallLeft(){
+            for(int i=-45;i<45;i++){
+           Actor wall=getOneObjectAtOffset(-40,i,Wall.class);
+            if(wall!=null)
+                return true;
+            }
+            return false;
+        }
 
     // check if the player is standing on a block returns 
     // true if the player's location is changed to fix a collision
@@ -122,15 +140,27 @@ public class Player extends Person
             yvel = 0;
         }
         
-        if (inWall()) {
+        if (lookForWallRight()||lookForWallLeft()) {
             xvel = 0;
+            if (lookForWallRight()){
+                hittingWallRight=true;
+            }
+            else{
+                hittingWallLeft=true;
+            }
+            
+            
+            
+        }else{
+            hittingWallRight=false;
+            hittingWallLeft=false;
         }
     }
 
     /* physical update */
     private void accelerate() {
         /* is any of this even nessecary?
-	if (yvel == 0 && xvel == 0) {
+    if (yvel == 0 && xvel == 0) {
             atRest = true;
         } else {
             atRest = false;
@@ -159,11 +189,11 @@ public class Player extends Person
 
     public void physicsUpdate() {
         accelerate();
-
+        collision();
         // apply velocity
         move((int) xvel, (int) yvel);
 
-        collision();
+        
     }
 
     /* input */
@@ -180,7 +210,7 @@ public class Player extends Person
         boolean left = Greenfoot.isKeyDown("left");
         boolean right = Greenfoot.isKeyDown("right");
 
-        if (left) {
+        if (left&&!hittingWallLeft) {
             if(getFacing()==1){
                 flipImage();
             }    
@@ -188,7 +218,7 @@ public class Player extends Person
             accelerating = true;
         }
 
-        if (right) {
+        if (right&&!hittingWallRight) {
             if(getFacing()==-1){
                 flipImage();
             }
