@@ -180,7 +180,7 @@ public class ShiftWorld extends World
         return x;
     }
 
-    // getRelativeY always returns y
+    // getWorldY always returns y
 
     public Player getPlayer() { return player; }
 

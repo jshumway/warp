@@ -6,7 +6,7 @@ public class Timer extends Actor
     private GreenfootImage board;
     private GreenfootImage sb;
     private int score = 0;
-    private String label = "Score: ";
+    private String label = "Time: ";
     private int scoreCounter;
     private int scoreCooldown = 30;
 

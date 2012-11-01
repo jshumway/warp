@@ -194,7 +194,7 @@ public class Player extends Person
     }
 
     private void killZone(){
-        if (getY() > 400)
+        if (getY() > ShiftWorld.worldHeight + 50)
         {
             ShiftWorld sw = (ShiftWorld) getWorld();
             sw.killPlayer();
@@ -211,6 +211,8 @@ public class Player extends Person
         physicsUpdate();
 
         inputResponse();
+        
+        killZone();
     } 
 }
 
