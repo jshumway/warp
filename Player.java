@@ -26,11 +26,14 @@ public class Player extends Person
     private boolean atRest;
     private boolean canJump;
     private int laserTick;
-    private boolean hittingWallLeft=false;
-    private boolean hittingWallRight=false;
+    private boolean hittingBlockLeft=false;
+    private boolean hittingBlockRight=false;
+    private boolean hittingFloor=false;
+    private boolean hittingCeiling=false;
 
     /** CREATOR **/
     public Player() {
+        // initialize physical state
         xvel = yvel = 0;
         atRest = false;
         accelerating = false;
@@ -50,8 +53,8 @@ public class Player extends Person
         impulse(0, -jumpImpulse);
     }
     
-    // test if the player is colliding with a wall
-    public boolean inWall() {
+    // UNUSED
+    /* public boolean inWall() {
         Wall wall = (Wall) getOneIntersectingObject (Wall.class);
         if (wall != null) {
             if (getRight() < wall.getRight() && getRight() > wall.getLeft()) {
@@ -65,27 +68,57 @@ public class Player extends Person
             }
         }
         return false;
-    }
-    private Boolean lookForWallRight(){
-        for(int i=-45;i<45;i++){
-           Actor wall=getOneObjectAtOffset(40,i,Wall.class);
-            if(wall!=null)
+    } */
+
+    // see if the player is going to hit a block to the right
+    private Boolean lookForBlockRight() {
+        // following the right edge of the actor, test every 5 points from bottom to top,
+        // looking for a collision
+        for (int i = -getHeight()/2; i < getHeight()/2; i+=5) {
+            Actor block=getOneObjectAtOffset(-getWidth()/2 - 1, i, Block.class);
+            if (block != null) 
                 return true;
-            }
-            return false;
-        }
-        private boolean lookForWallLeft(){
-            for(int i=-45;i<45;i++){
-           Actor wall=getOneObjectAtOffset(-40,i,Wall.class);
-            if(wall!=null)
-                return true;
-            }
-            return false;
         }
 
+        return false;
+    }
+
+    // see if the player is going to hit a block to the left
+    private boolean lookForBlockLeft(){
+        for (int i = -getHeight()/2; i < getHeight()/2; i+=5) {
+            Actor block=getOneObjectAtOffset(getWidth()/2 + 1, i, Block.class);
+            if(block!=null)
+                return true;
+        }
+
+        return false;
+    }
+
+    private boolean lookForFloor() {
+        for (int i = -getWidth()/2; i < getWidth()/2; i+=5) {
+            Actor block = getOneObjectAtOffset(i, getHeight()/2 + 1, Block.class);
+            if (block != null) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean lookForCeiling() {
+        for (int i = -getWidth()/2; i < getWidth()/2; i+=5) {
+            Actor block = getOneObjectAtOffset(i, -getHeight()/2 - 1, Block.class);
+            if (block != null) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    
     // check if the player is standing on a block returns 
     // true if the player's location is changed to fix a collision
-    public boolean onBlock() {
+    /* public boolean onBlock() {
         Block block = (Block) getOneIntersectingObject(Block.class);
         // make sure there is an actual block
         if (block != null) { // see if the player is above it
@@ -102,7 +135,7 @@ public class Player extends Person
             }
         }
         return false;
-    }
+    } */
     /* old collision check
         Block block = (Block) getOneIntersectingObject(Block.class);
         if (block != null) {
@@ -135,36 +168,42 @@ public class Player extends Person
     }
 
     public void collision() {
+        hittingCeiling = lookForCeiling();
+        hittingFloor = lookForFloor();
+        hittingBlockLeft = lookForBlockLeft();
+        hittingBlockRight = lookForBlockRight();
+
         // test vertical collision
-        if (onBlock() || onPlatform()) {
+        if (onPlatform() || hittingFloor || hittingCeiling) {
             yvel = 0;
         }
-        
-        if (lookForWallRight()||lookForWallLeft()) {
+        if (hittingFloor) {
+            canJump = true;
+            move(0, -1);
+        }
+        if (hittingCeiling) {
+            move(0, 1);
+        }
+
+        if (hittingBlockRight || hittingBlockLeft) {
             xvel = 0;
-            if (lookForWallRight()){
-                hittingWallRight=true;
-            }
-            else{
-                hittingWallLeft=true;
-            }
-            
-            
-            
-        }else{
-            hittingWallRight=false;
-            hittingWallLeft=false;
+        }
+        if (hittingBlockRight) {
+            move(1, 0);
+        }
+        if (hittingBlockLeft) {
+            move(-1, 0);
         }
     }
 
     /* physical update */
     private void accelerate() {
         /* is any of this even nessecary?
-    if (yvel == 0 && xvel == 0) {
-            atRest = true;
-        } else {
-            atRest = false;
-        } */
+           if (yvel == 0 && xvel == 0) {
+           atRest = true;
+           } else {
+           atRest = false;
+           } */
 
         // apply acceleration to velocity
         if (accelerating) {
@@ -188,19 +227,21 @@ public class Player extends Person
     }
 
     public void physicsUpdate() {
+        // apply acceleration to velocity
         accelerate();
-        collision();
-        // apply velocity
-        move((int) xvel, (int) yvel);
 
-        
+        // check for collisions before they happen
+        collision();
+
+        // apply (modified) velocity
+        move((int) xvel, (int) yvel);
     }
 
     /* input */
     public void inputResponse() {
         // jumping
         if (Greenfoot.isKeyDown("space")){
-            if (canJump){
+            if (canJump) {
                 jump();
                 canJump = false;
             }
@@ -210,18 +251,21 @@ public class Player extends Person
         boolean left = Greenfoot.isKeyDown("left");
         boolean right = Greenfoot.isKeyDown("right");
 
-        if (left&&!hittingWallLeft) {
-            if(getFacing()==1){
+        // animation stuff
+        if (left && !hittingBlockLeft) {
+            if(getFacing() == 1) {
                 flipImage();
             }    
+
             setFacing(-1);
             accelerating = true;
         }
 
-        if (right&&!hittingWallRight) {
-            if(getFacing()==-1){
+        if (right && !hittingBlockRight) {
+            if(getFacing() == -1) {
                 flipImage();
             }
+
             setFacing(1);
             accelerating = true;
         }
@@ -231,12 +275,12 @@ public class Player extends Person
         }
 
         //shooting
-        if ("t".equals(Greenfoot.getKey()))
-        {
+        if (Greenfoot.isKeyDown("t")) {
             fire();
         }
+
         //stabbing
-        if((Greenfoot.isKeyDown("f"))){
+        if (Greenfoot.isKeyDown("f")) {
             stab();
         }
     }
