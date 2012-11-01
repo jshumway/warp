@@ -8,20 +8,34 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class MovingPlatform extends Platform
 {
-    private int moveSpeed = 3;
+    /* tweakable */
+    private int moveSpeed = 2;
+    
+    /* interanl */
     private int count = 5;
+    private int dx = 0;
+    private int dy = 0;
+
     /**
-     * Act - do whatever the MovingPlatform wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
+     * Determine which direction(s) the platform should move in
      */
+    public MovingPlatform(boolean moveInX) {
+        // convert booleans to ints
+        if (moveInX)
+            dx = 1;
+        else
+            dy = 1;
+    }
+    
     public void act() 
     {
         // Add your action code here.
         moveToWaypoint();
     }    
-        public void moveToWaypoint()
+    
+    public void moveToWaypoint()
     {
-        setWorldLocation ( getWorldX() + moveSpeed, getY());
+        move(moveSpeed * dx, moveSpeed * dy);
         PlatformWaypoint platformwaypoint;
         platformwaypoint = (PlatformWaypoint) getOneIntersectingObject(PlatformWaypoint.class);
         if (platformwaypoint != null && count > 5)
