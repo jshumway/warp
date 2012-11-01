@@ -37,10 +37,13 @@ public class Player extends Person
         xvel = yvel = 0;
         atRest = false;
         accelerating = false;
+
+        setFacing(1);
     }
 
     /** MANIPULATORS **/
     /* physics helpers */
+
     /**
      * y is 0 at the top of the screen applying a positive y impulse 
      * will lanch the player towards the bottom of the screen
@@ -52,25 +55,13 @@ public class Player extends Person
     public void jump() {
         impulse(0, -jumpImpulse);
     }
-    
-    // UNUSED
-    /* public boolean inWall() {
-        Wall wall = (Wall) getOneIntersectingObject (Wall.class);
-        if (wall != null) {
-            if (getRight() < wall.getRight() && getRight() > wall.getLeft()) {
-                setWorldLocation(wall.getLeft() - getWidth()/2, getY());
-                return true;
-            }
-            
-            if (getLeft() > wall.getLeft() && getLeft() < wall.getRight()) {
-                setWorldLocation(wall.getRight() + getHeight()/2, getY());
-                return true;
-            }
-        }
-        return false;
-    } */
-
-    // see if the player is going to hit a block to the right
+   
+    /**
+     * Collision Functions. Collisions are detected before they happen
+     * by these functions. Each function tests if the player will be 
+     * inside a block by 1 pixel, and if they will be, set the player's
+     * velocity to 0.
+     */ 
     private Boolean lookForBlockRight() {
         // following the right edge of the actor, test every 5 points from bottom to top,
         // looking for a collision
@@ -83,7 +74,6 @@ public class Player extends Person
         return false;
     }
 
-    // see if the player is going to hit a block to the left
     private boolean lookForBlockLeft(){
         for (int i = -getHeight()/2; i < getHeight()/2; i+=5) {
             Actor block=getOneObjectAtOffset(getWidth()/2 + 1, i, Block.class);
@@ -115,36 +105,6 @@ public class Player extends Person
 
         return false;
     }
-    
-    // check if the player is standing on a block returns 
-    // true if the player's location is changed to fix a collision
-    /* public boolean onBlock() {
-        Block block = (Block) getOneIntersectingObject(Block.class);
-        // make sure there is an actual block
-        if (block != null) { // see if the player is above it
-            if (getBottom() < block.getBottom() &&
-                    getBottom() > block.getTop()) {
-                setWorldLocation(getWorldX(), block.getTop() - getHeight()/2);
-                canJump = true;
-                return true;
-            } else if (getTop() > block.getTop() &&
-                    getTop() < block.getBottom()) {
-                setWorldLocation(getWorldX(), block.getBottom() + getHeight()/2);
-                System.out.println("Hit your head lol!");
-                return true;
-            }
-        }
-        return false;
-    } */
-    /* old collision check
-        Block block = (Block) getOneIntersectingObject(Block.class);
-        if (block != null) {
-            setLocation(getX(), getY() - (getBottom() - block.getTop()));
-            return true;
-        }
-
-        return false;
-    }*/
 
     // check if the palyer is standing on a wooden platform
     public boolean onPlatform() {
@@ -198,13 +158,6 @@ public class Player extends Person
 
     /* physical update */
     private void accelerate() {
-        /* is any of this even nessecary?
-           if (yvel == 0 && xvel == 0) {
-           atRest = true;
-           } else {
-           atRest = false;
-           } */
-
         // apply acceleration to velocity
         if (accelerating) {
             xvel += horizontalAccel * getFacing();
