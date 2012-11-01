@@ -49,4 +49,7 @@ public class ShiftActor extends Actor
     public int getRight() { return worldx + getImage().getWidth() / 2; }
     public int getTop() { return worldy - getImage().getHeight() / 2; }
     public int getBottom() { return worldy + getImage().getHeight() / 2; }
+
+    public int getHeight() { return getImage().getHeight(); }
+    public int getWidth() { return getImage().getWidth(); }
 }

@@ -40,16 +40,21 @@ public class ShiftWorld extends World
         timer.setLocation(79,19);
         // adds the player
         Player player = new Player();
-        player.setWorldLocation(400, 400);
-        this.player = player;
-        viewTarget = player;
-        addObject(player, 400, 400);
+        registerPlayer(player, 400, 400);
     }
-
+    
     // used by editor world
     public ShiftWorld(int width, int height) {
-        super(width, height, 1);
+        super(width, height, 1, false);
         paintOrder();
+    }
+
+    // register a Player object with the world
+    public void registerPlayer(Player p, int x, int y) {
+        p.setWorldLocation(x, y);
+        this.player = p;
+        this.viewTarget = p;
+        addObject(p, x, y);   
     }
 
     /* MANIPULATORS */

@@ -32,11 +32,14 @@ public class Player extends Person
         xvel = yvel = 0;
         atRest = false;
         accelerating = false;
-
     }
 
     /** MANIPULATORS **/
     /* physics helpers */
+    /**
+     * y is 0 at the top of the screen applying a positive y impulse 
+     * will lanch the player towards the bottom of the screen
+     */
     public void impulse(int x, int y) {
         xvel += x; yvel += y;
     }
@@ -44,9 +47,45 @@ public class Player extends Person
     public void jump() {
         impulse(0, -jumpImpulse);
     }
+    
+    // test if the player is colliding with a wall
+    public boolean inWall() {
+        Wall wall = (Wall) getOneIntersectingObject (Wall.class);
+        if (wall != null) {
+            if (getRight() < wall.getRight() && getRight() > wall.getLeft()) {
+                setWorldLocation(wall.getLeft() - getWidth()/2, getY());
+                return true;
+            }
+            
+            if (getLeft() > wall.getLeft() && getLeft() < wall.getRight()) {
+                setWorldLocation(wall.getRight() + getHeight()/2, getY());
+                return true;
+            }
+        }
+        return false;
+    }
 
-    // check if the player is standing on a block
+    // check if the player is standing on a block returns 
+    // true if the player's location is changed to fix a collision
     public boolean onBlock() {
+        Block block = (Block) getOneIntersectingObject(Block.class);
+        // make sure there is an actual block
+        if (block != null) { // see if the player is above it
+            if (getBottom() < block.getBottom() &&
+                    getBottom() > block.getTop()) {
+                setWorldLocation(getWorldX(), block.getTop() - getHeight()/2);
+                canJump = true;
+                return true;
+            } else if (getTop() > block.getTop() &&
+                    getTop() < block.getBottom()) {
+                setWorldLocation(getWorldX(), block.getBottom() + getHeight()/2);
+                System.out.println("Hit your head lol!");
+                return true;
+            }
+        }
+        return false;
+    }
+    /* old collision check
         Block block = (Block) getOneIntersectingObject(Block.class);
         if (block != null) {
             setLocation(getX(), getY() - (getBottom() - block.getTop()));
@@ -54,20 +93,24 @@ public class Player extends Person
         }
 
         return false;
-    }
+    }*/
 
     // check if the palyer is standing on a wooden platform
     public boolean onPlatform() {
         if (yvel >= 0) {
             Platform platform;
             platform = (Platform) getOneIntersectingObject(Platform.class);
-            if (platform != null && yvel >= 0) {
-                // if (getBottom() - platform.getTop() <= yvel) {
-                if (getBottom() - platform.getTop() <= yvel * 2) {
-                    setLocation(getX(), getY() - (getBottom() - platform.getTop()));
+
+            if (platform != null) { /* && yvel >= 0) { */
+                if (getBottom() - platform.getTop() <= Math.abs(yvel * 4)) {
+                    setWorldLocation(getWorldX(), platform.getTop() - getHeight()/2);
+                    canJump = true;
+                    yvel = 0;
                     return true;
                 }
-            }
+            } /* else if (platform != null) {// && yvel < 0
+                if (getBottom() - platform.getTop() <
+            } */
         }
 
         return false;
@@ -76,22 +119,28 @@ public class Player extends Person
     public void collision() {
         // test vertical collision
         if (onBlock() || onPlatform()) {
-            yvel = 0; canJump = true;
+            yvel = 0;
+        }
+        
+        if (inWall()) {
+            xvel = 0;
         }
     }
 
     /* physical update */
     private void accelerate() {
-        if (yvel == 0 && xvel == 0) {
+        /* is any of this even nessecary?
+	if (yvel == 0 && xvel == 0) {
             atRest = true;
         } else {
             atRest = false;
-        }
+        } */
 
         // apply acceleration to velocity
         if (accelerating) {
             xvel += horizontalAccel * getFacing();
         }
+
         xvel -= xvel * friction;
 
         yvel += gravityAccel;
