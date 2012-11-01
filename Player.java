@@ -205,6 +205,7 @@ public class Player extends Person
         {
             fire();
         }
+        //stabbing
         if((Greenfoot.isKeyDown("f"))){
             stab();
         }
@@ -233,9 +234,9 @@ public class Player extends Person
             Laser laser = new Laser(getFacing());
             //ShiftWorld sw = (ShiftWorld) getWorld();
 
-            getWorld().addObject(laser, getX() + fireOffset , getY());
+            getWorld().addObject(laser, getX() + fireOffset * getFacing() , getY());
 
-            laser.setWorldLocation(getWorldX() + fireOffset, getY());
+            laser.setWorldLocation(getWorldX() + fireOffset * getFacing() , getY());
             laser.setRotation(getRotation());
             laserTick = laserCooldown;
         }

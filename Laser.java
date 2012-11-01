@@ -15,6 +15,9 @@ public class Laser extends ShiftActor
     private int direction;
 
     public Laser(int dir){
+        if (dir == 0){
+            dir = 1;
+        }
         direction=dir;
     }
     public void act() 
@@ -44,7 +47,7 @@ public class Laser extends ShiftActor
             getWorld().removeObject(this);
             return;
         } else if (enemy != null) {
-            getWorld().removeObject(this);   
+            getWorld().removeObject(this);
         }
     }
 }
