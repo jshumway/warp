@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class MovingPlatform extends ShiftActor
+public class MovingPlatform extends Platform
 {
     private int moveSpeed = 3;
     private int count = 5;
@@ -21,7 +21,7 @@ public class MovingPlatform extends ShiftActor
     }    
         public void moveToWaypoint()
     {
-        setWorldLocation ( getX() + moveSpeed, getY());
+        setWorldLocation ( getWorldX() + moveSpeed, getY());
         PlatformWaypoint platformwaypoint;
         platformwaypoint = (PlatformWaypoint) getOneIntersectingObject(PlatformWaypoint.class);
         if (platformwaypoint != null && count > 5)
