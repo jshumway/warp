@@ -20,7 +20,9 @@ public class PatrolingEnemy extends Enemy
     }
 
     protected void moveToPoint() {
-        move((2*getFacing()),0);
+        // this is ugly, but it makes the swordsman move
+        // by 1 pixle, then 2 pixels, then 1 again, etc
+        move(1 * (count % 2 + 1) * getFacing(),0);
 
         Actor wayPoint=getOneIntersectingObject(WayPoint.class);
 

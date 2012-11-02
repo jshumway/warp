@@ -3,7 +3,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class InstructionsOne extends World
 {
     public InstructionsOne() {
-        super(600, 400, 1); 
+        super(800, 600, 1); 
     }
 
     public void act() {
