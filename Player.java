@@ -26,10 +26,12 @@ public class Player extends Person
     private boolean atRest;
     private boolean canJump;
     private int laserTick;
+    private int animationTick;
     private boolean hittingBlockLeft=false;
     private boolean hittingBlockRight=false;
     private boolean hittingFloor=false;
     private boolean hittingCeiling=false;
+    private boolean stabAnimationGoing=false;
 
     /** CREATOR **/
     public Player() {
@@ -234,7 +236,9 @@ public class Player extends Person
 
         //stabbing
         if (Greenfoot.isKeyDown("f")) {
-            stab();
+            stabAnimation("Stab",".png",6);
+            stabAnimationGoing=true;
+            
         }
     }
 
@@ -242,6 +246,35 @@ public class Player extends Person
         GreenfootImage image=getImage();
         image.mirrorHorizontally();
         setImage(image);
+    }
+    private int length;
+    private  GreenfootImage[] animation;
+    public void stabAnimation(String f,String ft,int animationLength)
+    {
+        animation = new GreenfootImage[animationLength];
+        length=animationLength;
+        for(int i=0;i<length;i++){
+            String file=f+i+ft;
+            animation[i]=new GreenfootImage(file);
+            
+        }
+        counter=0;
+        // Add your action code here.
+    } 
+     private int counter=0;
+    public void stabAnimate(){
+        setImage(animation[counter]);
+        if(getFacing()==-1)
+            flipImage();
+        //will need to make it so it cheacks what direction its looking and changes the image to match
+        counter++;
+        if(counter==length){
+            stabAnimationGoing=false;
+            stab();
+            setImage("Main.png");
+            if(getFacing()==-1)
+                flipImage();
+        }
     }
 
     private void stab(){
@@ -283,6 +316,11 @@ public class Player extends Person
         if (laserTick > 0){
             laserTick--;
         }
+        if(stabAnimationGoing&&animationTick==3){
+            stabAnimate();
+            animationTick=0;
+        }else if(stabAnimationGoing)
+            animationTick++;
 
         physicsUpdate();
 

@@ -18,6 +18,11 @@ public class EditorWorld extends ShiftWorld
      */
     public void prepare()
     {
-       
+
+        Block block = new Block();
+        addObject(block, 40, 567);
+        block.blockRow(50);
+        Player player = new Player();
+        addObject(player, 635, 515);
     }
 }
