@@ -17,8 +17,8 @@ public class Player extends Person
     private double friction = 0.35;
     private int jumpImpulse = 20;
     private int fireOffset = 120;
-    private int laserCooldown = 200;
-    private int stabRange = 90;
+    private int laserCooldown = 75;
+    private int stabRange = 50;
 
     /* internal */
     private double yvel, xvel;
@@ -246,9 +246,9 @@ public class Player extends Person
 
     private void stab(){
         for (int i = 0; i < stabRange; i++) {
-            Enemy enemy = (Enemy) getOneObjectAtOffset(i*getFacing(),0,Enemy.class);            
+            Enemy enemy = (Enemy) getOneObjectAtOffset(i*getFacing(),0,Enemy.class);
 
-            if(enemy != null && enemy.beStabbed()) {
+            if (enemy != null && enemy.beStabbed()) {
                 if (getFacing() == enemy.getFacing()) {
                     getWorld().removeObject(enemy);
                 }
@@ -274,7 +274,7 @@ public class Player extends Person
         if (getY() > ShiftWorld.worldHeight + 50)
         {
             ShiftWorld sw = (ShiftWorld) getWorld();
-            sw.killPlayer();
+            sw.resetLevel();
         }
     }
 
