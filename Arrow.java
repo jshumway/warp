@@ -16,6 +16,11 @@ public class Arrow extends ShiftActor
     
     public Arrow(int dir) {
         direction = dir;
+        if (dir == 1) {
+            GreenfootImage image = getImage();
+            image.mirrorHorizontally();
+            setImage(image);
+        }
     }
     
     public void act() {
