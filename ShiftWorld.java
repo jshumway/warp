@@ -164,6 +164,11 @@ public class ShiftWorld extends World
         }
     }
 
+    public void endLevel() {
+        System.out.println("That would have ended the level. For now, it kills the player.");
+        killPlayer();
+    }
+
     /* ACCESSORS */
     // get the top left corner of the camera
     // used for saveWorldLocation
