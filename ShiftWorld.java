@@ -39,8 +39,6 @@ public class ShiftWorld extends World
         addObject(timer, 74, 60);
         timer.setLocation(79,19);
         // adds the player
-        Player player = new Player();
-        registerPlayer(player, 400, 400);
     }
     
     // used by editor world
@@ -54,7 +52,7 @@ public class ShiftWorld extends World
         p.setWorldLocation(x, y);
         this.player = p;
         this.viewTarget = p;
-        addObject(p, x, y);   
+        addObject(p);
     }
 
     /* MANIPULATORS */
@@ -93,15 +91,6 @@ public class ShiftWorld extends World
             WayPoint.class, Platform.class, Player.class,
             Enemy.class, Block.class, Background.class);
     }
-
-    /* fills the bottom of the screen with blocks */
-    /* public void fillBottom() {
-        for (int i = 0; i <= worldWidth; i+=48) {
-            Block b = new Block();
-            b.setWorldLocation(i, worldHeight - 24);
-            addObject(b, i, worldHeight - 24);
-        }
-    } */
 
     /* create a row of platforms that is count long (including the
      * head) starting from the platform head
@@ -164,10 +153,9 @@ public class ShiftWorld extends World
         }
     }
 
-    public void endLevel() {
-        System.out.println("That would have ended the level. For now, it kills the player.");
-        killPlayer();
-    }
+    // OVERRIDE THESE
+    public void nextLevel() { System.out.println("Going to the next level"); }
+    public void resetLevel() { System.out.println("Resetting the level"); }
 
     /* ACCESSORS */
     // get the top left corner of the camera

@@ -8,7 +8,7 @@ public class Exit extends ShiftActor
         if (p != null) {
             ShiftWorld sw = (ShiftWorld) getWorld();
 
-            sw.endLevel();
+            sw.nextLevel();
         }
     }    
 }
