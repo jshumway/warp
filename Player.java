@@ -278,7 +278,6 @@ public class Player extends Person
         }
     }
 
-
     public void act(){ 
 
         if (laserTick > 0){
@@ -289,7 +288,23 @@ public class Player extends Person
 
         inputResponse();
         
+        // stuff to do
         killZone();
+        checkJumpPad();
     } 
+
+    /**
+     * Special stuff.
+     */
+    public void checkJumpPad() {
+        JumpPad jp = (JumpPad) getOneIntersectingObject(JumpPad.class);
+        if (jp != null) {
+            if (jp.dy > 0) {
+                yvel = 0; canJump = false;
+            }
+
+            impulse(jp.dx, -jp.dy);
+        }
+    }
 }
 
