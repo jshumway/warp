@@ -10,6 +10,7 @@ public class Swordsman extends PatrolingEnemy
         super(dir);
         if(dir==1)
             flipImage();
+        setCanBeStabbed(true);
     }
      private void flipImage(){
         GreenfootImage image=getImage();

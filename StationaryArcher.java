@@ -15,7 +15,7 @@ public class StationaryArcher extends StationaryEnemy
     private int fireTick;
 
     public StationaryArcher(int dir){
-        super(dir, 300);
+        super(dir, 500);
         fireTick = 0;
         setShot(true);
         if(dir==1)

@@ -2,7 +2,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 public class Enemy extends Person
 {
-    protected int sightRange=50;
+    protected int sightRange=450;
     private Boolean canShot=false;
     private Boolean canStabed=false;
      
@@ -33,7 +33,7 @@ public class Enemy extends Person
     public boolean rayTrace(int range, int facing) {
         int distToWall = range;
 
-        for (int i = 0; i < range; i++) {
+        for (int i = 0; i < range; i+=7) {
             Actor wall = getOneObjectAtOffset(i*facing,0,Block.class);
             Actor player = getOneObjectAtOffset(i*facing,0,Player.class);
 
