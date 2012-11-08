@@ -24,9 +24,9 @@ public class Swordsman extends PatrolingEnemy
     }
 
     private void attemptKill() {
-        if (rayTrace(killDistance, getFacing())) {
-            ShiftWorld sw = (ShiftWorld) getWorld();
-            sw.resetLevel();
+        Player player=rayTrace(killDistance, getFacing());
+        if (player!=null) {
+            player.hit();
         }
     }
 }

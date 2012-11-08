@@ -21,6 +21,9 @@ public class Player extends Person
     private int stabRange = 50;
 
     /* internal */
+    private double hp=1;
+    private boolean invulnerable=false;
+    private int invulntimer=0;
     private double yvel, xvel;
     private boolean accelerating;
     private boolean atRest;
@@ -95,6 +98,19 @@ public class Player extends Person
         }
 
         return false;
+    }
+    public void hit(){
+        if(invulnerable){
+            hp=-1;
+            if(hp<=0){
+                ShiftWorld sw = (ShiftWorld) getWorld();
+                sw.resetLevel();
+            }else{
+                invulnerable= true;
+                invulntimer = 10;
+            }
+        }
+        
     }
 
     private boolean lookForCeiling() {
@@ -311,7 +327,11 @@ public class Player extends Person
         }
     }
 
-    public void act(){ 
+    public void act(){
+        if(invulntimer==0){
+            invulnerable=false;
+        }   
+        invulntimer=-1;
 
         if (laserTick > 0){
             laserTick--;
