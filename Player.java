@@ -35,6 +35,9 @@ public class Player extends Person
     private boolean hittingFloor=false;
     private boolean hittingCeiling=false;
     private boolean stabAnimationGoing=false;
+    private boolean isJumping=false; // for the animation not sure where to put it yet no good spots
+    private boolean isRunning=false; //for animation of movement
+    private boolean isShooting=false; //for shooting animantion
 
     /** CREATOR **/
     public Player() {
@@ -227,12 +230,13 @@ public class Player extends Person
             if(getFacing() == 1) {
                 flipImage();
             }    
-
+            isRunning=true;
             setFacing(-1);
             accelerating = true;
         }
 
         if (right && !hittingBlockRight) {
+            isRunning=true;
             if(getFacing() == -1) {
                 flipImage();
             }
@@ -242,12 +246,16 @@ public class Player extends Person
         }
 
         if (!left && !right) {
+            isRunning=false;
             accelerating = false;
         }
 
         //shooting
         if (Greenfoot.isKeyDown("t")) {
-            fire();
+            if(laserTick==0){
+                isShooting=true;
+                fire(); // will need to be replaced with the start of the animation
+            }
         }
 
         //stabbing
@@ -306,7 +314,6 @@ public class Player extends Person
     }
 
     private void fire(){
-        if (laserTick == 0){
             Laser laser = new Laser(getFacing());
             //ShiftWorld sw = (ShiftWorld) getWorld();
 
@@ -315,7 +322,7 @@ public class Player extends Person
             laser.setWorldLocation(getWorldX() + fireOffset * getFacing() , getY());
             laser.setRotation(getRotation());
             laserTick = laserCooldown;
-        }
+            isShooting=false;
 
     }
 
