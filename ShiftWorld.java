@@ -10,13 +10,16 @@ import java.util.List;
  */
 public class ShiftWorld extends World
 {
+    // enable god mode here!
+    private boolean godMode = false;
+
     /* world geometry */
     public static final int worldWidth = 3200;
     public static final int worldHeight = 600;
 
     /* screen geometry */
     public static final int screenWidth = 800;
-    public static final int screenHeight = 600;    
+    public static final int screenHeight = 600;
 
     /** internal **/
     // the player controlled actor
@@ -86,10 +89,10 @@ public class ShiftWorld extends World
 
     public void paintOrder() {
         // sets the order in which things appear on the world
-        setPaintOrder(Timer.class, MakeWayPoint.class, PlatformWaypoint.class, 
-            Laser.class, Arrow.class, MovingPlatform.class, 
-            WayPoint.class, Platform.class, Player.class,
-            Enemy.class, Block.class, Background.class);
+        setPaintOrder(Timer.class, Player.class, Exit.class,
+            Laser.class, Arrow.class, MovingPlatform.class, JumpPad.class,
+            Platform.class, Enemy.class, Block.class, Background.class, 
+            WayPoint.class, PlatformWaypoint.class, MakeWayPoint.class);
     }
 
     /* create a row of platforms that is count long (including the
@@ -148,7 +151,8 @@ public class ShiftWorld extends World
     public void killPlayer() {
         if (player != null) {
             // do shit to kill the player
-            player.setWorldLocation(300, 300);
+            if (!godMode)
+                resetLevel();
             // removeObject(player);
         }
     }

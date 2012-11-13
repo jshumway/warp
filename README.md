@@ -1,34 +1,48 @@
+Jared Shumway, Geddy Pence, James Green, Michael Lenz, Jordan Tang, Kevin Tsui
+
 Warp
 ====
 
-A 2D sidescroller based around stealth, assassinations, acrobatic puzzles, and time travel.
+Running It
+----------
 
-To Create a World
------------------
+Open greenfoot, hit compile, and hit start. The introducton screen should be visable. If for some reason it isn't create a new IntroScreen.
 
-First, subclass `ShiftWorld` with your own class, named something like *LevelJared* or *JaredLevel1*. Put this to the side right now.
+Instructions follow the first intro screen.
 
-Right click `EditorWorld` and hit `new EditorWorld()`. Put a bunch of stuff into this world. **NOTE:** *Where ever you place an object initially is its final location. Moving it around will not move it's actual location, because greenfoot hates us.
+If you would prefer to play the game with god mode, open the ShiftWorld class > find the variable at the top name 'godMode' and make it true. There will be a better way to do this in the final version.
 
-Anyway, when you have placed all of your ojbects (don't place the Player), right click and choose *Save the World*. This will save all of the objects in the current world into `EditorWorld`, specically into the `prepare` method. Right click `TestWorld` and choose `new TestWorld()`. This will create a world using the prepare statement from the `EditorWorld`, but will add a player and include the proper screen dimensions.
+Have fun!
 
-If you want to edit the placement of any objects, you need to readd the object in question to `EditorWorld`, do *Save the World* again. 
+About The Prototype
+-------------------
 
-**IMPORTANT**: Do not commit changes to *EditorWorld.java*. When git complains about unstaged changes, just right click the file and choose git stash. This will stash the change away so that git ignores what you did to it for the purposes of commiting, pushing, and pulling.
+This prototype adds new featurs, adds new levels, fixes bugs, and tunes gameplay.
 
-### Adding a Background
+We added:
 
-To add a background image to your level, open your level class and find the constructor. Change the constructor so that it has the following two lines, and looks similar to:
+ * better enemies
+ * intro screen
+ * instruction screen
+ * multiple levels
+ * collisio overhaul
+ * moving platforms
+ * facing animations
+ * stabbing animations
+ * actual arrow art
+ * jump pads
+ * walls
+ * levels reset properly
+ * you die if you fall off the map
+ * there is a timer
+ * and many improvements to the edtior environment were added.
 
-```` java
-public LevelJared {
-    super();
+Bugs were ironed out, and many adjustments were made, such as: 
 
-    Background bg = new Background("my_background.png");
-    addObject(bg);
+ * enemy patrol speed
+ * laser and arrow speed
+ * rate of fire
+ * jump height
+ * all assets were scaled down 
 
-    // other stuff
-}
-````
-
-**Note**: "my_backrground.png" is the name of a file inside the `images/` directory inside the greenfoot project folder.
+-- Warp dev team (CPE123 17/18 -- Group 5)

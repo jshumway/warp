@@ -18,7 +18,7 @@ public class Player extends Person
     private int jumpImpulse = 20;
     private int fireOffset = 120;
     private int laserCooldown = 75;
-    private int stabRange = 50;
+    private int stabRange = 65;
 
     /* internal */
     private double yvel, xvel;

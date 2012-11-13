@@ -9,7 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Arrow extends ShiftActor
 {
     /* tweakable */
-    private int speed = 10;
+    private int speed = 7;
 
     /* internal */
     private int direction;
