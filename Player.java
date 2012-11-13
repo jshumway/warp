@@ -1,5 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
+import java.awt.Color;
 /**
  * Handles things like collisions, gravity, and acceleration, player
  * input
@@ -103,7 +103,7 @@ public class Player extends Person
         return false;
     }
     public void hit(){
-        if(invulnerable){
+        if(!invulnerable){
             hp=-1;
             if(hp<=0){
                 ShiftWorld sw = (ShiftWorld) getWorld();
@@ -320,7 +320,7 @@ public class Player extends Person
         for(int j=0;j<numParticles;j++){
             int xVel=(Greenfoot.getRandomNumber(10)+1)*getFacing();
             int yVel=Greenfoot.getRandomNumber(10)-5;
-            Particles particle=new Particles(xVel,yVel);
+            Particles particle=new Particles(xVel,yVel,Color.red);
             getWorld().addObject(particle,x,getY());
             particle.setWorldLocation((getX()+i)*getFacing(),getY());
         }   

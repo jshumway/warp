@@ -1,5 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.awt.*;
+import java.awt.Color;
 /**
  * Write a description of class Particles here.
  * 
@@ -13,8 +13,8 @@ public class Particles extends ShiftActor
     private int yVelocity;
     private int transparentcy=255;
     private GreenfootImage image;
-    public Particles(int xVel,int yVel){
-        color=Color.red;
+    public Particles(int xVel,int yVel,Color c){
+        color=c;
         xVelocity=xVel;
         yVelocity=yVel;
         image=new GreenfootImage(3,3);
