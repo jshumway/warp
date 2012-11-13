@@ -30,27 +30,27 @@ public class Enemy extends Person
   
     // generalized to work without reliance on this objects state
     // at least in regards to range and facing
-    public boolean rayTrace(int range, int facing) {
+    public Player rayTrace(int range, int facing) {
         int distToWall = range;
 
         for (int i = 0; i < range; i+=7) {
             Actor wall = getOneObjectAtOffset(i*facing,0,Block.class);
-            Actor player = getOneObjectAtOffset(i*facing,0,Player.class);
+            Player player =(Player) getOneObjectAtOffset(i*facing,0,Player.class);
 
             if(wall != null) {
-                return false;
+                return null;
             }             
             
             if(player != null) {
-                return true;
+                return player;
             }
         }
 
-        return false;
+        return null;
     }
 
     // don't break public interfaces!
     public boolean look() {
-        return rayTrace(sightRange, getFacing());
+        return rayTrace(sightRange, getFacing())!=null;
     }
 }

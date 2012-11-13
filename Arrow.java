@@ -40,10 +40,8 @@ public class Arrow extends ShiftActor
         // this && false is so that arrows don't kill the player. For
         // testing purposes only -- removed
         if (hit != null) {
-            ShiftWorld sw = (ShiftWorld) getWorld();
-
-            sw.killPlayer();
-            getWorld().removeObject(this);
+            Player player=(Player)hit;
+            player.hit();
         }
     }
 }
