@@ -1,18 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-/**
- * Write a description of class LevelGeddy here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 public class LevelGeddy extends ShiftWorld
 {
-
-    /**
-     * Constructor for objects of class LevelGeddy.
-     * 
-     */
     public LevelGeddy()
     {    
         super();
@@ -24,16 +13,6 @@ public class LevelGeddy extends ShiftWorld
         addObject(bg);
         
         prepare();
-    }
-    
-    public void nextLevel() {
-        World w = new VictoryScreen();
-        Greenfoot.setWorld(w);
-    }
-    
-    public void resetLevel() {
-        World w = new LevelGeddy();
-        Greenfoot.setWorld(w);
     }
     
     public void prepare() {

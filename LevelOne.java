@@ -15,16 +15,6 @@ public class LevelOne extends ShiftWorld
         prepare();
     }
     
-    public void nextLevel() {
-        World w = new JamesWorld();
-        Greenfoot.setWorld(w);
-    }
-    
-    public void resetLevel() {
-        World w = new LevelOne();
-        Greenfoot.setWorld(w);
-    }
-    
     public void prepare()
     {
         Block block = new Block();

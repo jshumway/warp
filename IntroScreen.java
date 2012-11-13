@@ -8,8 +8,7 @@ public class IntroScreen extends World
     
     public void act() {
         if (Greenfoot.mouseClicked(this)) {
-            InstructionsOne i = new InstructionsOne();
-            Greenfoot.setWorld(i);
+            ShiftWorld.nextLevel();
         }
     }
 }

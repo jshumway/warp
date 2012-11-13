@@ -1,21 +1,9 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-/**
- * Write a description of class JamesWorld here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 public class JamesWorld extends ShiftWorld
 {
-
-    /**
-     * Constructor for objects of class JamesWorld.
-     * 
-     */
     public JamesWorld()
     {    
-        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(); 
         Background bg = new Background("background.png");
         addObject(bg);
@@ -25,16 +13,6 @@ public class JamesWorld extends ShiftWorld
 
     }
     
-    public void resetLevel() {
-        World w = new JamesWorld();
-        Greenfoot.setWorld(w);
-    }
-    
-    public void nextLevel() {
-        World w = new LevelGeddy();
-        Greenfoot.setWorld(w);
-    }
-
     public void prepare()
     {
         Block block = new Block();

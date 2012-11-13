@@ -8,8 +8,7 @@ public class InstructionsOne extends World
 
     public void act() {
         if (Greenfoot.mouseClicked(this)) {
-            LevelOne l = new LevelOne();
-            Greenfoot.setWorld(l);
+            ShiftWorld.nextLevel();
         }
     }
 }

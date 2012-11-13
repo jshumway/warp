@@ -10,6 +10,7 @@ import java.util.List;
  */
 public class ShiftWorld extends World
 {
+    /** tweakable **/
     // enable god mode here!
     private boolean godMode = false;
 
@@ -30,6 +31,30 @@ public class ShiftWorld extends World
 
     // the actor that the screen should center on
     private ShiftActor viewTarget;
+
+    /* static methods for level trasitions */
+    private static int levelIndex = 0;
+
+    public static void advanceLevel(int by) {
+        switch (levelIndex) {
+            case 0: Greenfoot.setWorld(new IntroScreen()); break;
+            case 1: Greenfoot.setWorld(new InstructionsOne()); break;
+            case 2: Greenfoot.setWorld(new LevelOne()); break;
+            case 3: Greenfoot.setWorld(new LevelGeddy()); break;
+            case 4: Greenfoot.setWorld(new JamesWorld()); break;
+            case 5: Greenfoot.setWorld(new VictoryScreen()); break;
+        }
+        
+        levelIndex += by;
+    }
+
+    public static void resetLevel() {
+        advanceLevel(0);
+    }
+
+    public static void nextLevel() {
+        advanceLevel(1);
+    }
 
     /* CONSTRUCTOR */
     public ShiftWorld()
@@ -156,10 +181,6 @@ public class ShiftWorld extends World
             // removeObject(player);
         }
     }
-
-    // OVERRIDE THESE
-    public void nextLevel() { System.out.println("Going to the next level"); }
-    public void resetLevel() { System.out.println("Resetting the level"); }
 
     /* ACCESSORS */
     // get the top left corner of the camera
