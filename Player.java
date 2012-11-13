@@ -308,9 +308,22 @@ public class Player extends Person
             if (enemy != null && enemy.beStabbed()) {
                 if (getFacing() == enemy.getFacing()) {
                     getWorld().removeObject(enemy);
+                    addParticles(i);
                 }
             }
         }
+        
+    }
+    private void addParticles(int i){
+        int x=(getX()+i)*getFacing();
+        int numParticles=Greenfoot.getRandomNumber(40)+15;
+        for(int j=0;j<numParticles;j++){
+            int xVel=(Greenfoot.getRandomNumber(10)+1)*getFacing();
+            int yVel=Greenfoot.getRandomNumber(10)-5;
+            Particles particle=new Particles(xVel,yVel);
+            getWorld().addObject(particle,x,getY());
+            particle.setWorldLocation((getX()+i)*getFacing(),getY());
+        }   
     }
 
     private void fire(){
