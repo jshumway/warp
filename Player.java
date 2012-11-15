@@ -38,6 +38,7 @@ public class Player extends Person
     private boolean isJumping=false; // for the animation not sure where to put it yet no good spots
     private boolean isRunning=false; //for animation of movement
     private boolean isShooting=false; //for shooting animantion
+    private boolean controlsLocked=false;
 
     /** CREATOR **/
     public Player() {
@@ -140,9 +141,7 @@ public class Player extends Person
                     yvel = 0;
                     return true;
                 }
-            } /* else if (platform != null) {// && yvel < 0
-                if (getBottom() - platform.getTop() <
-            } */
+            }
         }
 
         return false;
@@ -213,6 +212,8 @@ public class Player extends Person
 
     /* input */
     public void inputResponse() {
+        if (controlsLocked) return;
+
         // jumping
         if (Greenfoot.isKeyDown("space")){
             if (canJump) {
@@ -262,7 +263,6 @@ public class Player extends Person
         if (Greenfoot.isKeyDown("f")) {
             stabAnimation("Stab",".png",6);
             stabAnimationGoing=true;
-            
         }
     }
 
@@ -271,6 +271,7 @@ public class Player extends Person
         image.mirrorHorizontally();
         setImage(image);
     }
+
     private int length;
     private  GreenfootImage[] animation;
     public void stabAnimation(String f,String ft,int animationLength)
@@ -285,7 +286,8 @@ public class Player extends Person
         counter=0;
         // Add your action code here.
     } 
-     private int counter=0;
+
+    private int counter=0;
     public void stabAnimate(){
         setImage(animation[counter]);
         if(getFacing()==-1)
@@ -314,6 +316,7 @@ public class Player extends Person
         }
         
     }
+
     private void addParticles(int i){
         int x=(getX()+i)*getFacing();
         int numParticles=Greenfoot.getRandomNumber(40)+15;
@@ -414,5 +417,8 @@ public class Player extends Person
                 }
             }
         }
+
+    public void lockControls() { controlsLocked = true; accelerating = false; }
+    public void unlockControls() { controlsLocked = false; }
 }
 

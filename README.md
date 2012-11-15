@@ -24,11 +24,15 @@ To add a background image to your level, open your level class and find the cons
 public LevelJared {
     super();
 
-    Background bg = new Background("my_background.png");
+    Background bg = new Background("my-background.png");
     addObject(bg);
 
     // other stuff
 }
 ````
 
-**Note**: "my_backrground.png" is the name of a file inside the `images/` directory inside the greenfoot project folder.
+**Note**: "my-backrground.png" is the name of a file inside the `images/` directory inside the greenfoot project folder.
+
+### Adding Notes
+
+First, create an image that is around 600x500px. It should look like a piece of paper and have writing on it, as part of the image. In an EditorWorld, add a `NotePickup`. Creating such an object requires a filename, the file name of your note image. Done. You do not add a `Note`. `Note`s are created by `NotePickup`s.
