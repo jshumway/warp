@@ -1,5 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
+import java.awt.Color;
 /**
  * Write a description of class Arrow here.
  * 
@@ -25,6 +25,7 @@ public class Arrow extends ShiftActor
     
     public void act() {
         move(direction*speed, 0);
+        
         collision();
     }    
 

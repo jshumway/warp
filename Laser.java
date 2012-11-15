@@ -1,5 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
+import java.awt.Color;
 /**
  * Write a description of class Laser here.
  * 
@@ -23,6 +23,7 @@ public class Laser extends ShiftActor
     public void act() 
     {
         move(speed * direction,0);
+        addParticles();
         collision();
         
         // bounds checking
@@ -32,6 +33,16 @@ public class Laser extends ShiftActor
             getWorld().removeObject(this);
         }
     } 
+    private void addParticles(){
+        int y=getY()+getHeight();
+        int x=getX();
+        if(direction==-1){
+            x=x+getWidth();
+        }
+        Particles particle=new Particles(0,0,Color.yellow);
+        getWorld().addObject(particle,x,y);
+        particle.setWorldLocation(x,y);
+    }
     private void collision() {
         Actor hit=getOneIntersectingObject(Block.class);
 

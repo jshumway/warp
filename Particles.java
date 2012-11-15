@@ -1,5 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.awt.*;
+import java.awt.Color;
 /**
  * Write a description of class Particles here.
  * 
@@ -13,8 +13,9 @@ public class Particles extends ShiftActor
     private int yVelocity;
     private int transparentcy=255;
     private GreenfootImage image;
-    public Particles(int xVel,int yVel){
-        color=Color.red;
+    private boolean gravity=true;
+    public Particles(int xVel,int yVel,Color c){
+        color=c;
         xVelocity=xVel;
         yVelocity=yVel;
         image=new GreenfootImage(3,3);
@@ -23,6 +24,16 @@ public class Particles extends ShiftActor
         setImage(image);
         
     }
+    public Particles(int xVel,int yVel, Color c, boolean g){
+        color=c;
+        xVelocity=xVel;
+        yVelocity=yVel;
+        image=new GreenfootImage(3,3);
+        image.setColor(color);
+        image.fillRect(0,0,3,3);
+        setImage(image);
+        gravity =g;
+    }
     /**
      * Act - do whatever the Particles wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
@@ -30,7 +41,8 @@ public class Particles extends ShiftActor
     public void act() 
     {
         move(xVelocity,yVelocity);
-        yVelocity=yVelocity+1;
+        if(gravity)
+            yVelocity=yVelocity+1;
         transparentcy-=5;
         image.setTransparency(transparentcy);
         if(transparentcy==0){
