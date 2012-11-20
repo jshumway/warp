@@ -1,4 +1,5 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+
+import greenfoot.*; // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.awt.Color;
 /**
  * Handles things like collisions, gravity, and acceleration, player
@@ -34,11 +35,16 @@ public class Player extends Person
     private boolean hittingBlockRight=false;
     private boolean hittingFloor=false;
     private boolean hittingCeiling=false;
+    private boolean hittingMovingWallAbove=false;
+    private boolean hittingMovingWallBelow=false;
+    private boolean hittingMovingWallLeft=false;
+    private boolean hittingMovingWallRight=false;
+    private boolean controlsLocked=false;
+
     private boolean stabAnimationGoing=false;
     private boolean isJumping=false; // for the animation not sure where to put it yet no good spots
     private boolean isRunning=false; //for animation of movement
     private boolean isShooting=false; //for shooting animantion
-    private boolean controlsLocked=false;
 
     /** CREATOR **/
     public Player() {
@@ -64,7 +70,7 @@ public class Player extends Person
     public void jump() {
         impulse(0, -jumpImpulse);
     }
-   
+
     /**
      * Collision Functions. Collisions are detected before they happen
      * by these functions. Each function tests if the player will be 
@@ -103,6 +109,7 @@ public class Player extends Person
 
         return false;
     }
+
     public void hit(){
         if(!invulnerable){
             hp=-1;
@@ -114,7 +121,7 @@ public class Player extends Person
                 invulntimer = 10;
             }
         }
-        
+
     }
 
     private boolean lookForCeiling() {
@@ -123,6 +130,48 @@ public class Player extends Person
             if (block != null) {
                 return true;
             }
+        }
+
+        return false;
+    }
+
+    private boolean lookForMovingWallAbove(){
+        for (int i = -getWidth()/2; i < getWidth()/2; i+=5) {
+            Actor mw = getOneObjectAtOffset(i, -getHeight()/2 - 1, MovingWall.class);
+            if (mw != null) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean lookForMovingWallBelow(){
+        for (int i = -getWidth()/2; i < getWidth()/2; i+=5) {
+            Actor mw = getOneObjectAtOffset(i, getHeight()/2 + 1, MovingWall.class);
+            if (mw != null) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean lookForMovingWallLeft(){
+        for (int i = -getHeight()/2; i < getHeight()/2; i+=5) {
+            Actor mw=getOneObjectAtOffset(getWidth()/2 + 1, i, MovingWall.class);
+            if(mw!=null)
+                return true;
+        }
+
+        return false;
+    }
+
+    private boolean lookForMovingWallRight(){
+        for (int i = -getHeight()/2; i < getHeight()/2; i+=5) {
+            Actor mw=getOneObjectAtOffset(-getWidth()/2 - 1, i, MovingWall.class);
+            if (mw != null) 
+                return true;
         }
 
         return false;
@@ -141,7 +190,29 @@ public class Player extends Person
                     yvel = 0;
                     return true;
                 }
-            }
+            } /* else if (platform != null) {// && yvel < 0
+            if (getBottom() - platform.getTop() <
+            } */
+        }
+
+        return false;
+    }
+
+    public boolean onMovingWall(){
+        if (yvel >= 0) {
+            MovingWall mw;
+            mw = (MovingWall) getOneIntersectingObject(MovingWall.class);
+
+            if (mw != null) {
+                if (getBottom() - mw.getTop() <= Math.abs(yvel * 4)) {
+                    setWorldLocation(getWorldX(), mw.getTop() - getHeight()/2);
+                    canJump = true;
+                    yvel = 0;
+                    return true;
+                }
+            } /* else if (platform != null) {// && yvel < 0
+            if (getBottom() - platform.getTop() <
+            } */
         }
 
         return false;
@@ -152,26 +223,38 @@ public class Player extends Person
         hittingFloor = lookForFloor();
         hittingBlockLeft = lookForBlockLeft();
         hittingBlockRight = lookForBlockRight();
+        hittingMovingWallAbove = lookForMovingWallAbove();
+        hittingMovingWallBelow = lookForMovingWallBelow();
+        hittingMovingWallLeft = lookForMovingWallLeft();
+        hittingMovingWallRight = lookForMovingWallRight();
 
         // test vertical collision
-        if (onPlatform() || hittingFloor || hittingCeiling) {
+        if (onPlatform() || onMovingWall() || hittingFloor|| hittingCeiling || hittingMovingWallBelow || hittingMovingWallAbove ) {
             yvel = 0;
         }
-        if (hittingFloor) {
+        if (hittingFloor && !hittingMovingWallBelow) {
             canJump = true;
             move(0, -1);
+
         }
-        if (hittingCeiling) {
+        if (hittingMovingWallAbove && hittingFloor) {
+            addParticles(1);
+        }
+        if (hittingCeiling || hittingMovingWallAbove) {
             move(0, 1);
+            if(hittingMovingWallAbove){
+                move(0, 2);
+                yvel = 2;
+            }
         }
 
-        if (hittingBlockRight || hittingBlockLeft) {
+        if (hittingBlockRight || hittingBlockLeft || hittingMovingWallLeft || hittingMovingWallRight) {
             xvel = 0;
         }
-        if (hittingBlockRight) {
+        if (hittingBlockRight || hittingMovingWallRight) {
             move(1, 0);
         }
-        if (hittingBlockLeft) {
+        if (hittingBlockLeft || hittingMovingWallLeft) {
             move(-1, 0);
         }
     }
@@ -213,7 +296,6 @@ public class Player extends Person
     /* input */
     public void inputResponse() {
         if (controlsLocked) return;
-
         // jumping
         if (Greenfoot.isKeyDown("space")){
             if (canJump) {
@@ -230,7 +312,7 @@ public class Player extends Person
         if (left && !hittingBlockLeft) {
             if(getFacing() == 1) {
                 flipImage();
-            }    
+            } 
             isRunning=true;
             setFacing(-1);
             accelerating = true;
@@ -263,6 +345,7 @@ public class Player extends Person
         if (Greenfoot.isKeyDown("f")) {
             stabAnimation("Stab",".png",6);
             stabAnimationGoing=true;
+
         }
     }
 
@@ -271,9 +354,8 @@ public class Player extends Person
         image.mirrorHorizontally();
         setImage(image);
     }
-
     private int length;
-    private  GreenfootImage[] animation;
+    private GreenfootImage[] animation;
     public void stabAnimation(String f,String ft,int animationLength)
     {
         animation = new GreenfootImage[animationLength];
@@ -281,12 +363,11 @@ public class Player extends Person
         for(int i=0;i<length;i++){
             String file=f+i+ft;
             animation[i]=new GreenfootImage(file);
-            
+
         }
         counter=0;
         // Add your action code here.
     } 
-
     private int counter=0;
     public void stabAnimate(){
         setImage(animation[counter]);
@@ -314,7 +395,7 @@ public class Player extends Person
                 }
             }
         }
-        
+
     }
 
     private void addParticles(int i){
@@ -325,20 +406,20 @@ public class Player extends Person
             int yVel=Greenfoot.getRandomNumber(10)-5;
             Particles particle=new Particles(xVel,yVel,Color.red);
             getWorld().addObject(particle,x,getY());
-            particle.setWorldLocation((getX()+i)*getFacing(),getY());
-        }   
+            particle.setWorldLocation(x,getY()+getWidth()/2);
+        } 
     }
 
     private void fire(){
-            Laser laser = new Laser(getFacing());
-            //ShiftWorld sw = (ShiftWorld) getWorld();
+        Laser laser = new Laser(getFacing());
+        //ShiftWorld sw = (ShiftWorld) getWorld();
 
-            getWorld().addObject(laser, getX() + fireOffset * getFacing() , getY());
+        getWorld().addObject(laser, getX() + fireOffset * getFacing() , getY());
 
-            laser.setWorldLocation(getWorldX() + fireOffset * getFacing() , getY());
-            laser.setRotation(getRotation());
-            laserTick = laserCooldown;
-            isShooting=false;
+        laser.setWorldLocation(getWorldX() + fireOffset * getFacing() , getY());
+        laser.setRotation(getRotation());
+        laserTick = laserCooldown;
+        isShooting=false;
 
     }
 
@@ -353,7 +434,7 @@ public class Player extends Person
     public void act(){
         if(invulntimer==0){
             invulnerable=false;
-        }   
+        } 
         invulntimer=-1;
 
         if (laserTick > 0){
@@ -368,7 +449,7 @@ public class Player extends Person
         physicsUpdate();
 
         inputResponse();
-        
+
         // stuff to do
         killZone();
         checkJumpPad();
@@ -388,8 +469,9 @@ public class Player extends Person
             impulse(jp.dx, -jp.dy);
         }
     }
+
     private void addJumpParticles(){
-        
+
         int numParticles=Greenfoot.getRandomNumber(40)+15;
         int y=getY()+getHeight();
         for(int i=1;i<4;i++){
@@ -399,26 +481,25 @@ public class Player extends Person
                 if(j>getWidth()/2){
                     xMod=getWidth()-j;
                 }else if(j==getWidth()/2){
-                     xMod=0; 
+                    xMod=0; 
                 }else
                     xMod=-j;
-                    if(Math.abs(getWidth()/2-j)<15){
-                        yMod=-Math.abs(getWidth()/2-j);
-                    }
-                    int xVel=(int)((double)1/(double)xMod*10.0);
-                    int yVel=(-30+Math.abs(xVel)+yMod)/i;
-                    int grayScale=255-(Math.abs(xVel));
-                    if(grayScale<0)
-                    grayScale=0;
-                    Color color=new Color(Greenfoot.getRandomNumber(255),Greenfoot.getRandomNumber(255),Greenfoot.getRandomNumber(255));
-                    Particles particle=new Particles(xVel,yVel,color,false);
-                    getWorld().addObject(particle,getX()+j,y);
-                    particle.setWorldLocation(getX()+j,y);
+                if(Math.abs(getWidth()/2-j)<15){
+                    yMod=-Math.abs(getWidth()/2-j);
                 }
+                int xVel=(int)((double)1/(double)xMod*10.0);
+                int yVel=(-30+Math.abs(xVel)+yMod)/i;
+                int grayScale=255-(Math.abs(xVel));
+                if(grayScale<0)
+                    grayScale=0;
+                Color color=new Color(Greenfoot.getRandomNumber(255),Greenfoot.getRandomNumber(255),Greenfoot.getRandomNumber(255));
+                Particles particle=new Particles(xVel,yVel,color,false);
+                getWorld().addObject(particle,getX()+j,y);
+                particle.setWorldLocation(getX()+j,y);
             }
         }
-
+    }
     public void lockControls() { controlsLocked = true; accelerating = false; }
     public void unlockControls() { controlsLocked = false; }
+    
 }
-
