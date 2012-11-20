@@ -26,9 +26,9 @@ public class FallingPlatform extends Platform
                 if(yVel!=10){
                     yVel++;
                 }
-                setWorldLocation(getX(),getY()+yVel);
+               
             }
-            
+             move(0,yVel);
         }else{
                for(int i=-(getWidth()/2);i<getWidth();i++){
                 Actor player=getOneObjectAtOffset(i,-getHeight()/2,Player.class);
