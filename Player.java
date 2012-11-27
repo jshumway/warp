@@ -185,6 +185,7 @@ public class Player extends Person
 
             if (platform != null) { /* && yvel >= 0) { */
                 if (getBottom() - platform.getTop() <= Math.abs(yvel * 4)) {
+                    onMovingPlatform();
                     setWorldLocation(getWorldX(), platform.getTop() - getHeight()/2);
                     canJump = true;
                     yvel = 0;
@@ -196,6 +197,13 @@ public class Player extends Person
         }
 
         return false;
+    }
+    private void onMovingPlatform(){
+        MovingPlatform platform;
+        platform=(MovingPlatform) getOneIntersectingObject(MovingPlatform.class);
+        if(platform!=null){
+            move(platform.getVel()*2,0);
+        }
     }
 
     public boolean onMovingWall(){
@@ -399,7 +407,7 @@ public class Player extends Person
     }
 
     private void addParticles(int i){
-        int x=(getX()+i)*getFacing();
+        int x=(getWorldX()+i)*getFacing();
         int numParticles=Greenfoot.getRandomNumber(40)+15;
         for(int j=0;j<numParticles;j++){
             int xVel=(Greenfoot.getRandomNumber(10)+1)*getFacing();
@@ -494,8 +502,8 @@ public class Player extends Person
                     grayScale=0;
                 Color color=new Color(Greenfoot.getRandomNumber(255),Greenfoot.getRandomNumber(255),Greenfoot.getRandomNumber(255));
                 Particles particle=new Particles(xVel,yVel,color,false);
-                getWorld().addObject(particle,getX()+j,y);
-                particle.setWorldLocation(getX()+j,y);
+                getWorld().addObject(particle,getWorldX()+j,y);
+                particle.setWorldLocation(getWorldX()+j,y);
             }
         }
     }
