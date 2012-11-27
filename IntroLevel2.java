@@ -27,7 +27,8 @@ public class IntroLevel2 extends ShiftWorld
     }
     public void prepare()
     {
-         Block block = new Block();
+         
+        Block block = new Block();
         addObject(block, 30, 584);
         block.blockRow(3);
         JumpPad jumppad = new JumpPad(30, 30);
@@ -62,8 +63,8 @@ public class IntroLevel2 extends ShiftWorld
         addObject(block2, 1546, 110);
         block2.blockRow(3);
         Wall wall = new Wall();
-        addObject(wall, 1735, 551);
-        wall.wallStack(7);
+        addObject(wall, 1731, 595);
+        wall.wallStack(8);
         Wall wall2 = new Wall();
         addObject(wall2, 1945, 125);
         wall2.wallStack(4);
@@ -84,11 +85,11 @@ public class IntroLevel2 extends ShiftWorld
         MovingPlatform movingplatform6 = new MovingPlatform(false);
         addObject(movingplatform6, 2213, 220);
         Wall wall5 = new Wall();
-        addObject(wall5, 2332, 552);
-        wall5.wallStack(5);
+        addObject(wall5, 2332, 580);
+        wall5.wallStack(6);
         Wall wall14 = new Wall();
-        addObject(wall14, 2382, 552);
-        wall14.wallStack(5);
+        addObject(wall14, 2382, 580);
+        wall14.wallStack(6);
         Wall wall7 = new Wall();
         addObject(wall7, 2569, 210);
         wall7.wallStack(4);
@@ -119,18 +120,19 @@ public class IntroLevel2 extends ShiftWorld
         MovingPlatform movingplatform9 = new MovingPlatform(false);
         addObject(movingplatform9, 2951, 537);
         Wall wall11 = new Wall();
-        addObject(wall11, 3065, 552);
+        addObject(wall11, 3065, 575);
         wall11.wallStack(6);
         Wall wall19 = new Wall();
-        addObject(wall19, 3115, 552);
+        addObject(wall19, 3115, 575);
         wall19.wallStack(6);
         Wall wall20 = new Wall();
-        addObject(wall20, 3165, 552);
+        addObject(wall20, 3165, 575);
         wall20.wallStack(6);
         Wall wall21 = new Wall();
-        addObject(wall21, 3215, 552);
+        addObject(wall21, 3215, 575);
         wall21.wallStack(6);
         Exit exit = new Exit();
-        addObject(exit, 3153, 101);
+        addObject(exit, 3153, 122);
+
     }
 }
