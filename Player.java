@@ -363,18 +363,19 @@ public class Player extends Person
     }
     private int length;
     private GreenfootImage[] animation;
-    public void stabAnimation(String f,String ft,int animationLength)
-    {
+
+    public void stabAnimation(String f, String ft, int animationLength) {
         animation = new GreenfootImage[animationLength];
         length=animationLength;
         for(int i=0;i<length;i++){
             String file=f+i+ft;
             animation[i]=new GreenfootImage(file);
-
         }
+        
         counter=0;
         // Add your action code here.
     } 
+
     private int counter=0;
     public void stabAnimate(){
         setImage(animation[counter]);
@@ -447,7 +448,7 @@ public class Player extends Person
         if (laserTick > 0){
             laserTick--;
         }
-        if(stabAnimationGoing&&animationTick==3){
+        if(stabAnimationGoing&&animationTick==1){
             stabAnimate();
             animationTick=0;
         }else if(stabAnimationGoing)
