@@ -159,7 +159,15 @@ public class ShiftWorld extends World
             addObject(w);
         }
     }
-
+    public void wallRow(Wall head, int length) {
+        for (int i = 1; i < length; i++){
+            Wall r = new Wall();
+            int q = r.getWidth();
+            
+            r.setWorldLocation(head.getX() + i * q, head.getY());
+            addObject(r);
+        }
+    }
     // pass the absolute world location
     public void addObject(ShiftActor object, int x, int y) {
         addObject((Actor) object, x, y);
