@@ -35,7 +35,7 @@ public class Laser extends ShiftActor
     } 
     private void addParticles(){
         int y=getY()+getHeight();
-        int x=getX();
+        int x=getWorldX();
         if(direction==-1){
             x=x+getWidth();
         }
