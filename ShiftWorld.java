@@ -36,7 +36,7 @@ public class ShiftWorld extends World
     private static int levelIndex = 0;
 
     public static void advanceLevel(int by) {
-        switch (levelIndex) {
+        switch (levelIndex += by) {
             case 0: Greenfoot.setWorld(new IntroScreen()); break;
             case 1: Greenfoot.setWorld(new InstructionsOne()); break;
             case 2: Greenfoot.setWorld(new LevelOne()); break;
@@ -44,8 +44,6 @@ public class ShiftWorld extends World
             case 4: Greenfoot.setWorld(new JamesWorld()); break;
             case 5: Greenfoot.setWorld(new VictoryScreen()); break;
         }
-        
-        levelIndex += by;
     }
 
     public static void resetLevel() {
@@ -159,6 +157,7 @@ public class ShiftWorld extends World
             addObject(w);
         }
     }
+
     public void wallRow(Wall head, int length) {
         for (int i = 1; i < length; i++){
             Wall r = new Wall();
@@ -168,6 +167,7 @@ public class ShiftWorld extends World
             addObject(r);
         }
     }
+
     // pass the absolute world location
     public void addObject(ShiftActor object, int x, int y) {
         addObject((Actor) object, x, y);
