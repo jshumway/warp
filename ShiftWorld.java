@@ -182,9 +182,12 @@ public class ShiftWorld extends World
      * standard way
      */
     public void killPlayer() {
+        GreenfootSound sound = new GreenfootSound("player-dying.wav");
+
         if (player != null) {
             // do shit to kill the player
             if (!godMode)
+                sound.play();
                 resetLevel();
             // removeObject(player);
         }
