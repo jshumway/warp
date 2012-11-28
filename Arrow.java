@@ -13,6 +13,7 @@ public class Arrow extends ShiftActor
 
     /* internal */
     private int direction;
+    private GreenfootSound sound;
     
     public Arrow(int dir) {
         direction = dir;
@@ -21,6 +22,9 @@ public class Arrow extends ShiftActor
             image.mirrorHorizontally();
             setImage(image);
         }
+
+        sound = new GreenfootSound("sounds/arrow-hit-player.wav");
+        sound.setVolume(100);
     }
     
     public void act() {
@@ -43,6 +47,7 @@ public class Arrow extends ShiftActor
         if (hit != null) {
             Player player=(Player)hit;
             player.hit();
+            sound.play();
         }
     }
 }

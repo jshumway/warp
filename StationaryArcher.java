@@ -13,6 +13,7 @@ public class StationaryArcher extends StationaryEnemy
 
     /* internal */
     private int fireTick;
+    private GreenfootSound sound_fire_arrow;
 
     public StationaryArcher(int dir){
         super(dir, 500);
@@ -20,6 +21,8 @@ public class StationaryArcher extends StationaryEnemy
         setShot(true);
         if(dir==1)
             flipImage();
+
+        sound_fire_arrow = new GreenfootSound("sounds/arrow-fired.wav");
     }
      private void flipImage(){
         GreenfootImage image=getImage();
@@ -46,5 +49,7 @@ public class StationaryArcher extends StationaryEnemy
 
         sw.addObject(arrow, getX(), getY());
         arrow.setWorldLocation(sw.getWorldX(getX()), getY());
+
+        sound_fire_arrow.play();
     }   
 }

@@ -22,26 +22,28 @@ public class FallingPlatform extends Platform
             for(int i=-((getWidth()-4)/2);i<getWidth()-4;i++){
                 Actor block=getOneObjectAtOffset(i,getHeight()/2,Block.class);
                 if(block!=null){
-                   isFalling=false;
-                   return;
-                }
-                
-               
-            }
-            if(yVel!=10&&delay==0){
-                yVel++;
-            }else
-                delay--;
-             move(0,yVel);
-        }else{
-               for(int i=-(getWidth()/2);i<getWidth();i++){
-                Actor player=getOneObjectAtOffset(i,-getHeight()/2,Player.class);
-                if(player!=null){
-                   isFalling=true;
-                   delay=10;
-                }
-            }
+                 isFalling=false;
+                 return;
+             }
+             
+             
+         }
+         if(yVel!=10&&delay==0){
+            yVel++;
+        }else
+        delay--;
+        move(0,yVel);
+    }else{
+     for(int i=-(getWidth()/2);i<getWidth();i++){
+        Actor player=getOneObjectAtOffset(i,-getHeight()/2,Player.class);
+        if(player!=null){
+            GreenfootSound sound = new GreenfootSound("platform-falling.wav");
+            isFalling=true;
+            delay=10;
+            sound.play();
         }
+    }
+}
         // Add your action code here.
-    }    
+}    
 }

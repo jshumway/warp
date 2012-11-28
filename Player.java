@@ -68,7 +68,10 @@ public class Player extends Person
     }
 
     public void jump() {
+        GreenfootSound sound = new GreenfootSound("jumping-grunt.wav");
         impulse(0, -jumpImpulse);
+        sound.setVolume(75);
+        sound.play();
     }
 
     /**
@@ -363,7 +366,6 @@ public class Player extends Person
         for(int i=0;i<length;i++){
             String file=f+i+ft;
             animation[i]=new GreenfootImage(file);
-
         }
         counter=0;
         // Add your action code here.
@@ -375,7 +377,10 @@ public class Player extends Person
             flipImage();
         //will need to make it so it cheacks what direction its looking and changes the image to match
         counter++;
-        if(counter==length){
+        if (counter == length - 2) {
+            GreenfootSound sound = new GreenfootSound("player-stab-2.wav");
+            sound.play();
+        } else if(counter==length){
             stabAnimationGoing=false;
             stab();
             setImage("Main.png");
@@ -385,6 +390,8 @@ public class Player extends Person
     }
 
     private void stab(){
+        GreenfootSound guardDying = new GreenfootSound("guard-alert-2.wav");
+
         for (int i = 0; i < stabRange; i++) {
             Enemy enemy = (Enemy) getOneObjectAtOffset(i*getFacing(),0,Enemy.class);
 
@@ -392,6 +399,7 @@ public class Player extends Person
                 if (getFacing() == enemy.getFacing()) {
                     getWorld().removeObject(enemy);
                     addParticles(i);
+                    guardDying.play();
                 }
             }
         }
@@ -412,6 +420,7 @@ public class Player extends Person
 
     private void fire(){
         Laser laser = new Laser(getFacing());
+        GreenfootSound sound = new GreenfootSound("laser-fire-2.wav");
         //ShiftWorld sw = (ShiftWorld) getWorld();
 
         getWorld().addObject(laser, getX() + fireOffset * getFacing() , getY());
@@ -421,6 +430,7 @@ public class Player extends Person
         laserTick = laserCooldown;
         isShooting=false;
 
+        sound.play();
     }
 
     private void killZone(){
@@ -459,6 +469,8 @@ public class Player extends Person
      * Special stuff.
      */
     public void checkJumpPad() {
+        GreenfootSound sound = new GreenfootSound("jump-pad-lanch.wav");
+
         JumpPad jp = (JumpPad) getOneIntersectingObject(JumpPad.class);
         if (jp != null) {
             if (jp.dy > 0) {
@@ -467,6 +479,7 @@ public class Player extends Person
             }
 
             impulse(jp.dx, -jp.dy);
+            sound.play();
         }
     }
 
