@@ -24,7 +24,7 @@ public class FallingPlatform extends Platform
         
         if(isFalling){
             for(int i=-((getWidth()-60)/2);i<getWidth()-60;i++){
-                Actor block=getOneObjectAtOffset(i,getHeight()/2,Block.class);
+                Actor block=getOneObjectAtOffset(0,getHeight()/2,Block.class);
                 if(block!=null){
                     isFalling=false;
                     return;
