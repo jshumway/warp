@@ -18,7 +18,7 @@ public class IntroLevel3 extends ShiftWorld
         super();
         
         Player p = new Player();
-        registerPlayer(p, 100, 750);
+        registerPlayer(p, 100, 200);
         
         Background bg = new Background("background.png");
         addObject(bg);
