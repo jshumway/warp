@@ -112,7 +112,7 @@ public class ShiftWorld extends World
 
     public void paintOrder() {
         // sets the order in which things appear on the world
-        setPaintOrder(Note.class, Timer.class, Player.class, Exit.class,
+        setPaintOrder(Note.class, Timer.class, Particles.class, Player.class, Exit.class,
             Laser.class, Arrow.class, MovingPlatform.class, JumpPad.class,
             Platform.class, Enemy.class, Block.class, Background.class, 
             WayPoint.class, PlatformWaypoint.class, MakeWayPoint.class);
