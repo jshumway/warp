@@ -19,6 +19,7 @@ public class Player extends Person
     private int fireOffset = 120;
     private int laserCooldown = 75;
     private int stabRange = 65;
+    private int fallTicksToSound = 17; // how many ticks should the player fall for there to be a sound
 
     /* internal */
     private double hp=1;
@@ -44,6 +45,8 @@ public class Player extends Person
     private boolean isJumping=false; // for the animation not sure where to put it yet no good spots
     private boolean isRunning=false; //for animation of movement
     private boolean isShooting=false; //for shooting animantion
+
+    private int fallTickCounter = 0;
 
     /** CREATOR **/
     public Player() {
@@ -112,10 +115,14 @@ public class Player extends Person
         return false;
     }
 
+    /* this is called by enemies that hit the player with an arrow or sword */
     public void hit(){
+        GreenfootSound sound = new GreenfootSound("player-dying-1.wav");
+
         if(!invulnerable){
             hp=-1;
             if(hp<=0){
+                sound.play();
                 ShiftWorld sw = (ShiftWorld) getWorld();
                 sw.resetLevel();
             }else{
@@ -240,13 +247,19 @@ public class Player extends Person
 
         // test vertical collision
         if (onPlatform() || onMovingWall() || hittingFloor|| hittingCeiling || hittingMovingWallBelow || hittingMovingWallAbove ) {
+            if (fallTickCounter >= fallTicksToSound) {
+                GreenfootSound sound = new GreenfootSound("player-landing.wav");
+                sound.play();
+                fallTickCounter = 0;
+            }
+
             yvel = 0;
         }
         if (hittingFloor && !hittingMovingWallBelow) {
             canJump = true;
             move(0, -1);
-
         }
+
         if (hittingMovingWallAbove && hittingFloor) {
             addParticles(1);
         }
@@ -259,6 +272,10 @@ public class Player extends Person
         }
 
         if (hittingBlockRight || hittingBlockLeft || hittingMovingWallLeft || hittingMovingWallRight) {
+            if (Math.abs(xvel) > 3.22) {
+                GreenfootSound sound = new GreenfootSound("player-hits-wall.wav");
+                sound.play();
+            }
             xvel = 0;
         }
         if (hittingBlockRight || hittingMovingWallRight) {
@@ -293,6 +310,13 @@ public class Player extends Person
     }
 
     public void physicsUpdate() {
+        // keep track of how long the player has been falling
+        if (yvel > 0) {
+            fallTickCounter += 1;
+        } else if (yvel == 0) {
+            fallTickCounter = 0;
+        }
+
         // apply acceleration to velocity
         accelerate();
 
@@ -445,6 +469,11 @@ public class Player extends Person
     private void killZone(){
         if (getY() > ShiftWorld.worldHeight + 50)
         {
+            GreenfootSound sound = new GreenfootSound("player-falling.wav");
+            sound.play();
+
+            Greenfoot.delay(150);
+
             ShiftWorld sw = (ShiftWorld) getWorld();
             sw.resetLevel();
         }

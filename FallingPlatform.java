@@ -11,6 +11,10 @@ public class FallingPlatform extends Platform
     private int yVel=0;
     private boolean isFalling=false;
     private int delay=0;
+    
+    // used to prevent the sound from playing a million times after the plaform
+    // has hit the ground
+    private boolean soundDoOnce = false;
     /**
      * Act - do whatever the FallingPlatform wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
@@ -37,10 +41,13 @@ public class FallingPlatform extends Platform
             for(int i=-(getWidth()/2);i<getWidth();i++){
                 Actor player=getOneObjectAtOffset(i,-getHeight()/2,Player.class);
                 if(player!=null){
-                    GreenfootSound sound = new GreenfootSound("platform-falling.wav");
+                    if (soundDoOnce == false) {
+                        GreenfootSound sound = new GreenfootSound("platform-falling.wav");
+                        sound.play();
+                        soundDoOnce = true;
+                    }
                     isFalling=true;
                     delay=10;
-                    sound.play();
                 }
             }
         }

@@ -4,11 +4,15 @@ public class Note extends Actor
 {
     private boolean inited = false;
 
-    public Note(String filename) 
+    public Note(String filename)
     {
         super();
-        
+
+        GreenfootSound sound = new GreenfootSound("note-pickup-2.wav");
+
         setImage(filename);
+
+        sound.play();
     }    
 
     public void act() {
