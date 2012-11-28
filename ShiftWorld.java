@@ -39,10 +39,15 @@ public class ShiftWorld extends World
         switch (levelIndex += by) {
             case 0: Greenfoot.setWorld(new IntroScreen()); break;
             case 1: Greenfoot.setWorld(new InstructionsOne()); break;
-            case 2: Greenfoot.setWorld(new LevelOne()); break;
-            case 3: Greenfoot.setWorld(new LevelGeddy()); break;
-            case 4: Greenfoot.setWorld(new JamesWorld()); break;
-            case 5: Greenfoot.setWorld(new VictoryScreen()); break;
+            case 2: Greenfoot.setWorld(new IntroLevel1()); break;
+            case 3: Greenfoot.setWorld(new IntroLevel2()); break;
+            case 4: Greenfoot.setWorld(new IntroLevel3()); break;
+            case 5: Greenfoot.setWorld(new IntroLevel4()); break;
+            case 6: Greenfoot.setWorld(new IntroLevel5()); break;
+            case 7: Greenfoot.setWorld(new LevelOne()); break;
+            case 8: Greenfoot.setWorld(new LevelGeddy()); break;
+            case 9: Greenfoot.setWorld(new JamesWorld()); break;
+            case 10: Greenfoot.setWorld(new VictoryScreen()); break;
         }
     }
 
