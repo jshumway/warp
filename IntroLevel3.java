@@ -105,9 +105,9 @@ public class IntroLevel3 extends ShiftWorld
         PlatformWaypoint platformwaypoint5 = new PlatformWaypoint();
         addObject(platformwaypoint5, 1644, 572);
         Wall wall6 = new Wall();
-        addObject(wall6, 1703, 558);
+        addObject(wall6, 1703, 568);
         JumpPad jumppad2 = new JumpPad(30, 30);
-        addObject(jumppad2, 1704, 496);
+        addObject(jumppad2, 1704, 506);
         MovingPlatform movingplatform2 = new MovingPlatform(true);
         addObject(movingplatform2, 1210, 569);
         MovingPlatform movingplatform3 = new MovingPlatform(true);
@@ -115,9 +115,9 @@ public class IntroLevel3 extends ShiftWorld
         FallingPlatform fallingplatform2 = new FallingPlatform();
         addObject(fallingplatform2, 1901, 163);
         Wall wall7 = new Wall();
-        addObject(wall7, 2117, 560);
+        addObject(wall7, 2117, 568);
         JumpPad jumppad3 = new JumpPad(30, 30);
-        addObject(jumppad3, 2119, 497);
+        addObject(jumppad3, 2119, 506);
         PlatformWaypoint platformwaypoint6 = new PlatformWaypoint();
         addObject(platformwaypoint6, 2222, 154);
         PlatformWaypoint platformwaypoint7 = new PlatformWaypoint();

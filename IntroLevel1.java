@@ -69,19 +69,19 @@ public class IntroLevel1 extends ShiftWorld
         addObject(fallingplatform, 2464, 221);
         Wall wall6 = new Wall();
         addObject(wall6, 2560, 567);
-        JumpPad jumppad3 = new JumpPad(30, 30);
+        JumpPad jumppad3 = new JumpPad(60, 30);
         addObject(jumppad3, 2561, 504);
         Platform platform9 = new Platform();
         addObject(platform9, 2641, 222);
         Block block3 = new Block();
-        addObject(block3, 2738, 221);
+        addObject(block3, 2768, 218);
         block3.blockRow(3);
         Wall wall7 = new Wall();
         addObject(wall7, 2731, 567);
         wall7.wallStack(6);
         Block block4 = new Block();
         addObject(block4, 2789, 586);
-        block4.blockRow(5);
+        block4.blockRow(7);
         Exit exit = new Exit();
         addObject(exit, 2806, 484);
     }

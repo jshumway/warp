@@ -18,7 +18,7 @@ public class IntroLevel4 extends ShiftWorld
         super();
         
         Player p = new Player();
-        registerPlayer(p, 100, 750);
+        registerPlayer(p, 100, 100);
         
         Background bg = new Background("background v2.png");
         addObject(bg);
@@ -48,7 +48,7 @@ public class IntroLevel4 extends ShiftWorld
         Wall wall112 = new Wall();
         addObject(wall112, 846, 538);
         wall112.wallStack(6);
-        JumpPad jumppad4 = new JumpPad(30, 30);
+        JumpPad jumppad4 = new JumpPad(15, 30);
         addObject(jumppad4, 777, 542);
         Platform platform = new Platform();
         addObject(platform, 756, 185);
@@ -107,8 +107,6 @@ public class IntroLevel4 extends ShiftWorld
         addObject(platform3, 1804, 340);
         Block block16 = new Block();
         addObject(block16, 2025, 255);
-        Block block17 = new Block();
-        addObject(block17, 1961, 255);
         Block block18 = new Block();
         addObject(block18, 2139, 255);
         block18.blockRow(2);

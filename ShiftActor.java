@@ -15,7 +15,7 @@ public class ShiftActor extends Actor
 
     /* MANIPULATORS */
     public void setWorldLocation(int x, int y) {
-        int bound = 100;
+        int bound = 300;
         ShiftWorld sw = (ShiftWorld) getWorld();
 
         if (x < sw.worldWidth + bound && x > 0 - bound) {
