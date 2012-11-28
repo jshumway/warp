@@ -45,7 +45,7 @@ public class Player extends Person
     private boolean isJumping=false; // for the animation not sure where to put it yet no good spots
     private boolean isRunning=false; //for animation of movement
     private boolean isShooting=false; //for shooting animantion
-
+    
     private int fallTickCounter = 0;
 
     /** CREATOR **/
@@ -73,6 +73,12 @@ public class Player extends Person
         GreenfootSound sound = new GreenfootSound("jumping-grunt.wav");
         impulse(0, -jumpImpulse);
         sound.setVolume(75);
+        setImage("Main-Crouching.png");
+        if(getFacing()==-1){
+            flipImage();
+        }
+        isJumping=true;
+        
         sound.play();
     }
 
@@ -331,6 +337,12 @@ public class Player extends Person
     public void inputResponse() {
         if (controlsLocked) return;
         // jumping
+        if(isJumping){
+            setImage("Main.png");
+            isJumping=false;
+            if(getFacing()==-1)
+                flipImage();
+        }
         if (Greenfoot.isKeyDown("space")){
             if (canJump) {
                 jump();
