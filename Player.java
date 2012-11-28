@@ -1,4 +1,3 @@
-
 import greenfoot.*; // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.awt.Color;
 /**
@@ -188,6 +187,7 @@ public class Player extends Person
 
             if (platform != null) { /* && yvel >= 0) { */
                 if (getBottom() - platform.getTop() <= Math.abs(yvel * 4)) {
+                    onMovingPlatform();
                     setWorldLocation(getWorldX(), platform.getTop() - getHeight()/2);
                     canJump = true;
                     yvel = 0;
@@ -199,6 +199,13 @@ public class Player extends Person
         }
 
         return false;
+    }
+    private void onMovingPlatform(){
+        MovingPlatform platform;
+        platform=(MovingPlatform) getOneIntersectingObject(MovingPlatform.class);
+        if(platform!=null){
+            move(platform.getVel()*2,0);
+        }
     }
 
     public boolean onMovingWall(){
@@ -359,17 +366,19 @@ public class Player extends Person
     }
     private int length;
     private GreenfootImage[] animation;
-    public void stabAnimation(String f,String ft,int animationLength)
-    {
+
+    public void stabAnimation(String f, String ft, int animationLength) {
         animation = new GreenfootImage[animationLength];
         length=animationLength;
         for(int i=0;i<length;i++){
             String file=f+i+ft;
             animation[i]=new GreenfootImage(file);
         }
+        
         counter=0;
         // Add your action code here.
     } 
+
     private int counter=0;
     public void stabAnimate(){
         setImage(animation[counter]);
@@ -407,7 +416,7 @@ public class Player extends Person
     }
 
     private void addParticles(int i){
-        int x=(getX()+i)*getFacing();
+        int x=(getWorldX()+i)*getFacing();
         int numParticles=Greenfoot.getRandomNumber(40)+15;
         for(int j=0;j<numParticles;j++){
             int xVel=(Greenfoot.getRandomNumber(10)+1)*getFacing();
@@ -450,7 +459,7 @@ public class Player extends Person
         if (laserTick > 0){
             laserTick--;
         }
-        if(stabAnimationGoing&&animationTick==3){
+        if(stabAnimationGoing&&animationTick==1){
             stabAnimate();
             animationTick=0;
         }else if(stabAnimationGoing)
@@ -507,8 +516,8 @@ public class Player extends Person
                     grayScale=0;
                 Color color=new Color(Greenfoot.getRandomNumber(255),Greenfoot.getRandomNumber(255),Greenfoot.getRandomNumber(255));
                 Particles particle=new Particles(xVel,yVel,color,false);
-                getWorld().addObject(particle,getX()+j,y);
-                particle.setWorldLocation(getX()+j,y);
+                getWorld().addObject(particle,getWorldX()+j,y);
+                particle.setWorldLocation(getWorldX()+j,y);
             }
         }
     }

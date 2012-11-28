@@ -18,4 +18,9 @@ public class Wall extends Block
 
         sw.wallStack(this, height);
     }
+    public void wallRow(int length) {
+        ShiftWorld sw = (ShiftWorld) getWorld();
+
+        sw.wallRow(this, length);
+    }
 }

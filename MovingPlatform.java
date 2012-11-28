@@ -45,4 +45,7 @@ public class MovingPlatform extends Platform
         }
         count++;
     }
+    public int getVel(){
+        return moveSpeed*dx;
+    }
 }
