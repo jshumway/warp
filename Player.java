@@ -375,8 +375,16 @@ public class Player extends Person
         }
 
         if (!left && !right) {
-            isRunning=false;
+           
             accelerating = false;
+            if(isRunning){
+            setImage("Main.png");
+                    step=false;
+                    walkingDelay=0;
+                    if(getFacing()==-1)
+                        flipImage(); 
+                    }
+                     isRunning=false;
         }
 
         //shooting
@@ -490,7 +498,8 @@ public class Player extends Person
             sw.resetLevel();
         }
     }
-
+    private int walkingDelay=0;
+    private boolean step=false;
     public void act(){
         if(invulntimer==0){
             invulnerable=false;
@@ -505,7 +514,27 @@ public class Player extends Person
             animationTick=0;
         }else if(stabAnimationGoing)
             animationTick++;
-
+        if(isRunning&&!stabAnimationGoing){
+            if(walkingDelay==3){
+                if(step){
+                    setImage("Main.png");
+                    step=!step;
+                    if(getFacing()==-1)
+                        flipImage();      
+                }else{
+                    setImage("Main - Moving.png");
+                    step=!step;
+                        if(getFacing()==-1)
+                            flipImage();
+                }
+                walkingDelay=0;
+                
+                
+            }
+            else{
+                walkingDelay++;
+            }
+        }
         physicsUpdate();
 
         inputResponse();
