@@ -40,8 +40,8 @@ public class ShiftWorld extends World
             case 0: Greenfoot.setWorld(new IntroScreen()); break;
             case 1: Greenfoot.setWorld(new InstructionsOne()); break;
             case 2: Greenfoot.setWorld(new IntroLevel1()); break;
-            case 3: Greenfoot.setWorld(new IntroLevel2()); break;
-            case 4: Greenfoot.setWorld(new IntroLevel3()); break;
+            case 3: Greenfoot.setWorld(new IntroLevel3()); break;
+            case 4: Greenfoot.setWorld(new IntroLevel2()); break;
             case 5: Greenfoot.setWorld(new IntroLevel4()); break;
             case 6: Greenfoot.setWorld(new IntroLevel5()); break;
             case 7: Greenfoot.setWorld(new LevelOne()); break;
@@ -117,7 +117,7 @@ public class ShiftWorld extends World
 
     public void paintOrder() {
         // sets the order in which things appear on the world
-        setPaintOrder(Note.class, Timer.class, Particles.class, Player.class, Exit.class,
+        setPaintOrder(Note.class, Timer.class, NotePickup.class, Particles.class, Player.class, Exit.class,
             Laser.class, Arrow.class, MovingPlatform.class, JumpPad.class,
             Platform.class, Enemy.class, Block.class, Background.class, 
             WayPoint.class, PlatformWaypoint.class, MakeWayPoint.class);

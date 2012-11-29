@@ -133,6 +133,10 @@ public class IntroLevel2 extends ShiftWorld
         wall21.wallStack(6);
         Exit exit = new Exit();
         addObject(exit, 3153, 122);
+        NotePickup notepickup = new NotePickup("notes/note-2-1.png");
+        addObject(notepickup, 311, 129);
+        NotePickup notepickup2 = new NotePickup("notes/note-2-2.png");
+        addObject(notepickup2, 3066, 173);
 
     }
 }

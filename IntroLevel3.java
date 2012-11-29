@@ -137,5 +137,7 @@ public class IntroLevel3 extends ShiftWorld
         block2.blockRow(3);
         Exit exit = new Exit();
         addObject(exit, 3153, 480);
+        NotePickup notepickup = new NotePickup("notes/intro.png");
+        addObject(notepickup, 511, 501);
     }
 }
