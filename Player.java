@@ -336,6 +336,15 @@ public class Player extends Person
     /* input */
     public void inputResponse() {
         if (controlsLocked) return;
+
+        // controller input
+        boolean left = Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("a");
+        boolean right = Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("d");
+        boolean jump = Greenfoot.isKeyDown("space");
+
+        boolean shoot = Greenfoot.isKeyDown("l") || Greenfoot.isKeyDown("e");
+        boolean stab = Greenfoot.isKeyDown("k") || Greenfoot.isKeyDown("f");
+
         // jumping
         if(isJumping){
             setImage("Main.png");
@@ -343,16 +352,13 @@ public class Player extends Person
             if(getFacing()==-1)
                 flipImage();
         }
-        if (Greenfoot.isKeyDown("space")){
+
+        if (jump) {
             if (canJump) {
                 jump();
                 canJump = false;
             }
         }
-
-        // horizontal movement
-        boolean left = Greenfoot.isKeyDown("left");
-        boolean right = Greenfoot.isKeyDown("right");
 
         // animation stuff
         if (left && !hittingBlockLeft) {
@@ -375,20 +381,19 @@ public class Player extends Person
         }
 
         if (!left && !right) {
-           
             accelerating = false;
             if(isRunning){
-            setImage("Main.png");
-                    step=false;
-                    walkingDelay=0;
-                    if(getFacing()==-1)
-                        flipImage(); 
-                    }
-                     isRunning=false;
+                setImage("Main.png");
+                step=false;
+                walkingDelay=0;
+                if(getFacing()==-1)
+                    flipImage(); 
+            }
+            isRunning=false;
         }
 
         //shooting
-        if (Greenfoot.isKeyDown("t")) {
+        if (shoot) {
             if(laserTick==0){
                 isShooting=true;
                 fire(); // will need to be replaced with the start of the animation
@@ -396,7 +401,7 @@ public class Player extends Person
         }
 
         //stabbing
-        if (Greenfoot.isKeyDown("f")) {
+        if (stab) {
             stabAnimation("Stab",".png",6);
             stabAnimationGoing=true;
 
