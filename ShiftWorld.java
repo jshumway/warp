@@ -38,7 +38,7 @@ public class ShiftWorld extends World
     public static void advanceLevel(int by) {
         switch (levelIndex += by) {
             case 0: Greenfoot.setWorld(new IntroScreen()); break;
-            case 1: Greenfoot.setWorld(new InstructionsOne()); break;
+            case 1: levelIndex = 2;
             case 2: Greenfoot.setWorld(new IntroLevel1()); break;
             case 3: Greenfoot.setWorld(new IntroLevel3()); break;
             case 4: Greenfoot.setWorld(new IntroLevel2()); break;

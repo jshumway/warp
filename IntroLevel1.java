@@ -27,7 +27,7 @@ public class IntroLevel1 extends ShiftWorld
     }
     public void prepare()
     {
-         Block block = new Block();
+        Block block = new Block();
         addObject(block, 29, 585);
         block.blockRow(15);
         Wall wall = new Wall();
@@ -69,7 +69,7 @@ public class IntroLevel1 extends ShiftWorld
         addObject(fallingplatform, 2464, 221);
         Wall wall6 = new Wall();
         addObject(wall6, 2560, 567);
-        JumpPad jumppad3 = new JumpPad(60, 30);
+        JumpPad jumppad3 = new JumpPad(90, 30);
         addObject(jumppad3, 2561, 504);
         Platform platform9 = new Platform();
         addObject(platform9, 2641, 222);
@@ -84,5 +84,12 @@ public class IntroLevel1 extends ShiftWorld
         block4.blockRow(7);
         Exit exit = new Exit();
         addObject(exit, 2806, 484);
+        NotePickup notepickup = new NotePickup("notes/intro.png");
+        addObject(notepickup, 718, 523);
+        platform2.setLocation(715, 453);
+        platform2.setWorldLocation(715, 453);
+        platform.setLocation(715, 322);
+        platform.setWorldLocation(715, 322);
+        removeObject(platform3);
     }
 }
