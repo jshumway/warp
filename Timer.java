@@ -35,7 +35,7 @@ public class Timer extends Actor
         int boardTransparency = 125;
 
         board = new GreenfootImage(boardWidth, boardHeight);
-        board.setColor(Color.green);
+        board.setColor(Color.gray);
         board.setTransparency(boardTransparency);
         board.fillRect(0, 0, boardWidth, boardHeight);
         this.setImage(board);
