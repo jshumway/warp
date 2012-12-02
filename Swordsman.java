@@ -26,9 +26,19 @@ public class Swordsman extends PatrolingEnemy
             if(delay==2){
                 animate();
                 delay=0;
+                shallNotPass();
             }
             else{
                 delay++;
+            }
+        }
+        
+    }
+    private void shallNotPass(){
+        for(int i=-getHeight()/2; i<getHeight()/2; i++){
+            Player player=(Player) getOneObjectAtOffset(0,i,Player.class);
+            if(player!=null){
+                player.hit();
             }
         }
     }
