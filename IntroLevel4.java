@@ -18,7 +18,7 @@ public class IntroLevel4 extends ShiftWorld
         super();
         
         Player p = new Player();
-        registerPlayer(p, 100, 100);
+        registerPlayer(p, 388, 116);
         
         Background bg = new Background("background v2.png");
         addObject(bg);
@@ -29,16 +29,12 @@ public class IntroLevel4 extends ShiftWorld
     {
         Block block11 = new Block();
         addObject(block11, 23, 590);
-        block11.blockRow(35);
+        block11.blockRow(33);
         Wall wall109 = new Wall();
         addObject(wall109, 14, 538);
-        Wall wall110 = new Wall();
-        addObject(wall110, 352, 538);
-        StationarySwordsman stationaryswordsman = new StationarySwordsman(-1);
-        addObject(stationaryswordsman, 163, 525);
         Block block12 = new Block();
-        addObject(block12, 16, 181);
-        block12.blockRow(6);
+        addObject(block12, 209, 181);
+        block12.blockRow(5);
         FallingPlatform fallingplatform4 = new FallingPlatform();
         addObject(fallingplatform4, 432, 182);
         Wall wall111 = new Wall();
@@ -48,7 +44,7 @@ public class IntroLevel4 extends ShiftWorld
         Wall wall112 = new Wall();
         addObject(wall112, 846, 538);
         wall112.wallStack(6);
-        JumpPad jumppad4 = new JumpPad(15, 30);
+        JumpPad jumppad4 = new JumpPad(0, 30);
         addObject(jumppad4, 777, 542);
         Platform platform = new Platform();
         addObject(platform, 756, 185);
@@ -105,16 +101,12 @@ public class IntroLevel4 extends ShiftWorld
         addObject(platform2, 1993, 440);
         Platform platform3 = new Platform();
         addObject(platform3, 1804, 340);
-        Block block16 = new Block();
-        addObject(block16, 2025, 255);
-        Block block18 = new Block();
-        addObject(block18, 2139, 255);
-        block18.blockRow(2);
+
         FallingPlatform fallingplatform5 = new FallingPlatform();
         addObject(fallingplatform5, 2302, 254);
         Wall wall116 = new Wall();
-        addObject(wall116, 2395, 580);
-        wall116.wallStack(6);
+        addObject(wall116, 2395, 674);
+        wall116.wallStack(7);
         Block block19 = new Block();
         addObject(block19, 2451, 583);
         block19.blockRow(14);
@@ -129,5 +121,21 @@ public class IntroLevel4 extends ShiftWorld
         addObject(swordsman4, 2712, 518);
         Exit exit2 = new Exit();
         addObject(exit2, 2940, 480);
+        fallingplatform4.setLocation(111, 182);
+        fallingplatform4.setWorldLocation(111, 182);
+        Block block74 = new Block();
+        addObject(block74, 14, 183);
+        block74.setLocation(13, 182);
+        block74.setWorldLocation(13, 182);
+        StationarySwordsman stationaryswordsman = new StationarySwordsman(1);
+        addObject(stationaryswordsman, 569, 524);
+        FallingPlatform fallingplatform3 = new FallingPlatform();
+        addObject(fallingplatform3, 2174, 256);
+        fallingplatform3.setLocation(2173, 254);
+        fallingplatform3.setWorldLocation(2173, 254);
+        Stabbing stabbing = new Stabbing();
+        addObject(stabbing, 468, 342);
+        NotePickup notepickup = new NotePickup("notes/note-3.png");
+        addObject(notepickup, 2854, 526);
     }
 }

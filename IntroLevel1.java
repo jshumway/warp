@@ -18,7 +18,7 @@ public class IntroLevel1 extends ShiftWorld
         super();
         
         Player p = new Player();
-        registerPlayer(p, 100, 200);
+        registerPlayer(p, 100, 519);
         
         Background bg = new Background("background v2.png");
         addObject(bg);
@@ -69,7 +69,7 @@ public class IntroLevel1 extends ShiftWorld
         addObject(fallingplatform, 2464, 221);
         Wall wall6 = new Wall();
         addObject(wall6, 2560, 567);
-        JumpPad jumppad3 = new JumpPad(90, 30);
+        JumpPad jumppad3 = new JumpPad(45, 30);
         addObject(jumppad3, 2561, 504);
         Platform platform9 = new Platform();
         addObject(platform9, 2641, 222);
@@ -91,5 +91,15 @@ public class IntroLevel1 extends ShiftWorld
         platform.setLocation(715, 322);
         platform.setWorldLocation(715, 322);
         removeObject(platform3);
+        removeObject(wall6);
+        Block block29 = new Block();
+        addObject(block29, 2580, 569);
+        block29.setLocation(2579, 563);
+        block29.setWorldLocation(2579, 563);
+        block29.blockRow(2);
+        jumppad3.setLocation(2640, 514);
+        jumppad3.setWorldLocation(2640, 514);
+        Movement movement = new Movement();
+        addObject(movement, 312, 320);
     }
 }

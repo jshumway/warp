@@ -27,7 +27,7 @@ public class IntroLevel5 extends ShiftWorld
     }
     public void prepare()
     {
-                Block block3 = new Block();
+        Block block3 = new Block();
         addObject(block3, 28, 590);
         block3.blockRow(24);
         Block block4 = new Block();
@@ -35,9 +35,6 @@ public class IntroLevel5 extends ShiftWorld
         block4.blockRow(3);
         FallingPlatform fallingplatform = new FallingPlatform();
         addObject(fallingplatform, 245, 388);
-        Wall wall = new Wall();
-        addObject(wall, 334, 538);
-        wall.wallStack(3);
         StationaryArcher stationaryarcher = new StationaryArcher(1);
         addObject(stationaryarcher, 20, 525);
         Wall wall2 = new Wall();
@@ -115,5 +112,14 @@ public class IntroLevel5 extends ShiftWorld
         wall10.wallStack(4);
         StationaryArcher stationaryarcher4 = new StationaryArcher(-1);
         addObject(stationaryarcher4, 3018, 260);
+        Block block58 = new Block();
+        addObject(block58, 344, 387);
+        block58.setLocation(342, 388);
+        block58.setWorldLocation(342, 388);
+        block58.blockRow(4);
+        stationaryarcher.setLocation(424, 525);
+        stationaryarcher.setWorldLocation(424, 525);
+        Shooting shooting = new Shooting();
+        addObject(shooting, 266, 125);
     }
 }

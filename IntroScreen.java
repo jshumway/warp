@@ -4,6 +4,8 @@ public class IntroScreen extends World
 {
     public IntroScreen() {
         super(800, 600, 1);
+        
+        ShiftWorld.levelIndex = 0;
     }
     
     public void act() {

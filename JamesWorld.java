@@ -10,7 +10,6 @@ public class JamesWorld extends ShiftWorld
         Player p = new Player();
         registerPlayer(p, 175, 460);
         prepare();
-
     }
     
     public void prepare()
@@ -116,7 +115,5 @@ public class JamesWorld extends ShiftWorld
         Block block53 = new Block();
         addObject(block53, 3091, 227);
         block53.blockRow(3);
-        NotePickup notepickup = new NotePickup("notes/note-3.png");
-        addObject(notepickup, 3029, 176);
     }
 }

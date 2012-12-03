@@ -33,7 +33,7 @@ public class ShiftWorld extends World
     private ShiftActor viewTarget;
 
     /* static methods for level trasitions */
-    private static int levelIndex = 0;
+    public static int levelIndex = 0;
 
     public static void advanceLevel(int by) {
         switch (levelIndex += by) {
@@ -47,7 +47,8 @@ public class ShiftWorld extends World
             case 7: Greenfoot.setWorld(new LevelOne()); break;
             case 8: Greenfoot.setWorld(new LevelGeddy()); break;
             case 9: Greenfoot.setWorld(new JamesWorld()); break;
-            case 10: Greenfoot.setWorld(new VictoryScreen()); break;
+            case 10: Greenfoot.setWorld(new EndOfGameText()); break;
+            case 11: Greenfoot.setWorld(new VictoryScreen()); break;
         }
     }
 
@@ -117,7 +118,8 @@ public class ShiftWorld extends World
 
     public void paintOrder() {
         // sets the order in which things appear on the world
-        setPaintOrder(Note.class, Timer.class, NotePickup.class, Particles.class, Player.class, Exit.class,
+        setPaintOrder(Note.class, Timer.class, NotePickup.class, Particles.class, 
+            Player.class, ControlBanner.class, Exit.class,
             Laser.class, Arrow.class, MovingPlatform.class, JumpPad.class,
             Platform.class, Enemy.class, Block.class, Background.class, 
             WayPoint.class, PlatformWaypoint.class, MakeWayPoint.class);
